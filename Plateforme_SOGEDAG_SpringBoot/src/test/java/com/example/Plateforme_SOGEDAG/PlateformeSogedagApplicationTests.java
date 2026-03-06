@@ -1,10 +1,10 @@
-package com.example.Aji_Tsma3_BackEnd;
+package com.example.Plateforme_SOGEDAG;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AjiTsma3BackEndApplicationTests {
+class PlateformeSogedagApplicationTests {
 
 	@Test
 	void contextLoads() {

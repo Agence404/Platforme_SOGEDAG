@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Aji_Tsma3_BackEnd</artifactId>
+	<artifactId>Plateforme_SOGEDAG</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Aji_Tsma3_BackEnd</name>
-	<description>BackEnd Realisation for the app</description>
+	<name>Plateforme_SOGEDAG</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
