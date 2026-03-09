@@ -26,8 +26,12 @@ public class FileStorageService {
         try {
             Files.createDirectories(rootLocation);
             Files.createDirectories(rootLocation.resolve("blogs"));
+            Files.createDirectories(rootLocation.resolve("blogs/images"));
             Files.createDirectories(rootLocation.resolve("product-images"));
             Files.createDirectories(rootLocation.resolve("pdfs"));
+            Files.createDirectories(rootLocation.resolve("multimedia"));
+            Files.createDirectories(rootLocation.resolve("multimedia/images"));
+            Files.createDirectories(rootLocation.resolve("multimedia/pdfs"));
 
             System.out.println("Uploads folder = " + rootLocation);
             System.out.println("Blogs folder = " + rootLocation.resolve("blogs"));
@@ -36,6 +40,14 @@ public class FileStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize storage", e);
         }
+    }
+
+    public String storeMultimediaImage(MultipartFile file) {
+        return storeInFolder(file, "multimedia/images");
+    }
+
+    public String storeMultimediaPdf(MultipartFile file) {
+        return storeInFolder(file, "multimedia/pdfs");
     }
 
     // ancien comportement: stocke directement dans /uploads
@@ -60,8 +72,12 @@ public class FileStorageService {
 
     // nouvelles méthodes organisées par dossier
     public String storeBlogImage(MultipartFile file) {
-        return storeInFolder(file, "blogs");
+        return storeInFolder(file, "blogs/images");
     }
+
+//    public String storeBlogPdf(MultipartFile file) {
+//        return storeInFolder(file, "blogs/pdfs");
+//    }
 
     public String storeProductImage(MultipartFile file) {
         return storeInFolder(file, "product-images");

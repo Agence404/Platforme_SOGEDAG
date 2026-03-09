@@ -39,7 +39,7 @@ public class BlogArticleController {
             @RequestParam(value = "datePublication", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime datePublication,
             @RequestParam(value = "carrenceIds", required = false) Set<Long> carrenceIds,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
+            @RequestParam("image") MultipartFile image) {
 
         BlogArticleDTO dto = BlogArticleDTO.builder()
                 .titre(titre)

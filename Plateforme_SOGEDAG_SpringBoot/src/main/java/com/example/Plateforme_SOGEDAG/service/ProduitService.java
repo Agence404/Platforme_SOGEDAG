@@ -61,8 +61,7 @@ public class ProduitService {
             int order = 0;
             for (MultipartFile img : images) {
                 if (!img.isEmpty()) {
-                    String url = fileStorageService.store(img);
-
+                    String url = fileStorageService.storeProductImage(img);
                     ProductImage productImage = ProductImage.builder()
                             .imageUrl(url)
                             .displayOrder(order++)
@@ -76,7 +75,7 @@ public class ProduitService {
         }
 
         if (pdf != null && !pdf.isEmpty()) {
-            String pdfUrl = fileStorageService.store(pdf);
+            String pdfUrl = fileStorageService.storePdf(pdf);
             savedProduit.setPdfUrl(pdfUrl);
             savedProduit = produitRepository.save(savedProduit);
         }
@@ -172,6 +171,7 @@ public class ProduitService {
 
         return mapToDTO(produitRepository.save(produit));
     }
+
     private void replaceImages(Produit produit, List<MultipartFile> images) {
         if (images == null || images.isEmpty()) {
             return;
@@ -180,7 +180,8 @@ public class ProduitService {
         int order = 0;
         for (MultipartFile img : images) {
             if (!img.isEmpty()) {
-                fileStorageService.storeProductImage(img);
+                String url = fileStorageService.storeProductImage(img);
+
                 ProductImage productImage = ProductImage.builder()
                         .imageUrl(url)
                         .displayOrder(order++)
@@ -201,26 +202,29 @@ public class ProduitService {
         produit.setArchived(true);
         produitRepository.save(produit);
     }
+
     @Transactional
     public ProduitDTO archive(Long id) {
         Produit produit = produitRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produit introuvable"));
 
         produit.setStatus(ContentStatus.ARCHIVED);
-        produit.setArchived(true); // seulement si tu veux garder le booléen aussi
+        produit.setArchived(true);
 
         return mapToDTO(produitRepository.save(produit));
     }
+
     @Transactional
     public ProduitDTO unarchive(Long id) {
         Produit produit = produitRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produit introuvable"));
 
-        produit.setStatus(ContentStatus.DRAFT); // ou PUBLIE selon ta logique
+        produit.setStatus(ContentStatus.ARCHIVED);
         produit.setArchived(false);
 
         return mapToDTO(produitRepository.save(produit));
     }
+
     private void clearImages(Produit produit) {
         for (ProductImage image : produit.getImages()) {
             fileStorageService.delete(image.getImageUrl());
@@ -237,9 +241,7 @@ public class ProduitService {
             fileStorageService.delete(produit.getPdfUrl());
         }
 
-        fileStorageService.storePdf(pdf);
+        String pdfUrl = fileStorageService.storePdf(pdf);
         produit.setPdfUrl(pdfUrl);
     }
-
-
 }

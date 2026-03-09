@@ -39,11 +39,11 @@ public class BlogArticleService {
 
     @Transactional
     public BlogArticleDTO create(BlogArticleDTO dto, MultipartFile image) {
-        String imageUrl = null;
-
-        if (image != null && !image.isEmpty()) {
-            imageUrl = fileStorageService.storeBlogImage(image);
+        if (image == null || image.isEmpty()) {
+            throw new RuntimeException("L'image de couverture est obligatoire.");
         }
+
+        String imageUrl = fileStorageService.storeBlogImage(image);
 
         Set<Long> carrenceIds = dto.getCarrenceIds() != null
                 ? dto.getCarrenceIds()
