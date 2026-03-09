@@ -29,8 +29,6 @@ public class Produit {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal prix;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
