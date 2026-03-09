@@ -1,10 +1,12 @@
 package com.example.Plateforme_SOGEDAG.service;
 
 import com.example.Plateforme_SOGEDAG.dto.CarrenceDTO;
+import com.example.Plateforme_SOGEDAG.exception.ResourceNotFoundException;
 import com.example.Plateforme_SOGEDAG.models.Carrence;
 import com.example.Plateforme_SOGEDAG.repo.CarrenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -25,8 +27,7 @@ public class CarrenceService {
 
     public CarrenceDTO getById(Long id) {
         Carrence carrence = carrenceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        return mapToDTO(carrence);
+                .orElseThrow(() -> new ResourceNotFoundException("La catégorie avec l'id " + id + " n'existe pas."));        return mapToDTO(carrence);
     }
 
     public CarrenceDTO create(CarrenceDTO dto, MultipartFile image) {
@@ -47,8 +48,7 @@ public class CarrenceService {
 
     public CarrenceDTO update(Long id, CarrenceDTO dto, MultipartFile image) {
         Carrence carrence = carrenceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("La catégorie avec l'id " + id + " n'existe pas."));
         carrence.setNom(dto.getNom());
         carrence.setDescription(dto.getDescription());
         carrence.setStatus(dto.getStatus());
@@ -63,13 +63,17 @@ public class CarrenceService {
         return mapToDTO(carrenceRepository.save(carrence));
     }
 
-    public void delete(Long id) {
+    @Transactional
+    public String delete(Long id) {
         Carrence carrence = carrenceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("La catégorie avec l'id " + id + " n'existe pas."));
+
         if (carrence.getImageUrl() != null) {
             fileStorageService.delete(carrence.getImageUrl());
         }
+
         carrenceRepository.delete(carrence);
+        return "La catégorie a été supprimée avec succès.";
     }
 
     private CarrenceDTO mapToDTO(Carrence carrence) {

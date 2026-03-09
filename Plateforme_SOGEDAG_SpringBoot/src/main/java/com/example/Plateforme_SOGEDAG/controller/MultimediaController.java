@@ -1,13 +1,12 @@
 package com.example.Plateforme_SOGEDAG.controller;
 
+import com.example.Plateforme_SOGEDAG.dto.ApiResponse;
 import com.example.Plateforme_SOGEDAG.dto.MultimediaDTO;
 import com.example.Plateforme_SOGEDAG.service.MultimediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/multimedia")
@@ -17,17 +16,17 @@ public class MultimediaController {
     private final MultimediaService multimediaService;
 
     @GetMapping
-    public ResponseEntity<List<MultimediaDTO>> getAll() {
+    public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(multimediaService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MultimediaDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(multimediaService.getById(id));
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<MultimediaDTO> create(
+    public ResponseEntity<ApiResponse> create(
             @RequestParam("title") String title,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "image", required = false) MultipartFile image,
@@ -38,11 +37,18 @@ public class MultimediaController {
                 .description(description)
                 .build();
 
-        return ResponseEntity.ok(multimediaService.create(dto, image, pdf));
+        multimediaService.create(dto, image, pdf);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le multimedia a été créé avec succès.")
+                        .build()
+        );
     }
 
     @PutMapping(value = "/{id}", consumes = "multipart/form-data")
-    public ResponseEntity<MultimediaDTO> updateFull(
+    public ResponseEntity<ApiResponse> updateFull(
             @PathVariable Long id,
             @RequestParam("title") String title,
             @RequestParam(value = "description", required = false) String description,
@@ -54,11 +60,18 @@ public class MultimediaController {
                 .description(description)
                 .build();
 
-        return ResponseEntity.ok(multimediaService.updateFull(id, dto, image, pdf));
+        multimediaService.updateFull(id, dto, image, pdf);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le multimedia a été modifié avec succès.")
+                        .build()
+        );
     }
 
     @PatchMapping(value = "/{id}", consumes = "multipart/form-data")
-    public ResponseEntity<MultimediaDTO> updatePartial(
+    public ResponseEntity<ApiResponse> updatePartial(
             @PathVariable Long id,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
@@ -70,12 +83,25 @@ public class MultimediaController {
                 .description(description)
                 .build();
 
-        return ResponseEntity.ok(multimediaService.updatePartial(id, dto, image, pdf));
+        multimediaService.updatePartial(id, dto, image, pdf);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le multimedia a été mis à jour partiellement avec succès.")
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        multimediaService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+        String message = multimediaService.delete(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message(message)
+                        .build()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.example.Plateforme_SOGEDAG.controller;
 
+import com.example.Plateforme_SOGEDAG.dto.ApiResponse;
 import com.example.Plateforme_SOGEDAG.dto.CarrenceDTO;
 import com.example.Plateforme_SOGEDAG.models.enums.CarrenceStatus;
 import com.example.Plateforme_SOGEDAG.service.CarrenceService;
@@ -7,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -18,17 +17,17 @@ public class CarrenceController {
     private final CarrenceService carrenceService;
 
     @GetMapping
-    public ResponseEntity<List<CarrenceDTO>> getAll() {
+    public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(carrenceService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarrenceDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(carrenceService.getById(id));
     }
 
     @PostMapping(consumes = { "multipart/form-data" })
-    public ResponseEntity<CarrenceDTO> create(
+    public ResponseEntity<ApiResponse> create(
             @RequestParam("nom") String nom,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam("status") CarrenceStatus status,
@@ -40,11 +39,18 @@ public class CarrenceController {
                 .status(status)
                 .build();
 
-        return ResponseEntity.ok(carrenceService.create(dto, image));
+        carrenceService.create(dto, image);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("La catégorie a été créée avec succès.")
+                        .build()
+        );
     }
 
     @PutMapping(value = "/{id}", consumes = { "multipart/form-data" })
-    public ResponseEntity<CarrenceDTO> update(
+    public ResponseEntity<ApiResponse> update(
             @PathVariable Long id,
             @RequestParam("nom") String nom,
             @RequestParam(value = "description", required = false) String description,
@@ -57,12 +63,25 @@ public class CarrenceController {
                 .status(status)
                 .build();
 
-        return ResponseEntity.ok(carrenceService.update(id, dto, image));
+        carrenceService.update(id, dto, image);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("La catégorie a été modifiée avec succès.")
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        carrenceService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+        String message = carrenceService.delete(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message(message)
+                        .build()
+        );
     }
 }

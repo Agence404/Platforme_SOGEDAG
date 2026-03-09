@@ -1,6 +1,7 @@
 package com.example.Plateforme_SOGEDAG.service;
 
 import com.example.Plateforme_SOGEDAG.dto.MultimediaDTO;
+import com.example.Plateforme_SOGEDAG.exception.ResourceNotFoundException;
 import com.example.Plateforme_SOGEDAG.models.Multimedia;
 import com.example.Plateforme_SOGEDAG.repo.MultimediaRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class MultimediaService {
 
     public MultimediaDTO getById(Long id) {
         Multimedia multimedia = multimediaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Multimedia not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le multimedia avec l'id " + id + " n'existe pas."));
         return mapToDTO(multimedia);
     }
 
@@ -53,7 +54,7 @@ public class MultimediaService {
     @Transactional
     public MultimediaDTO updateFull(Long id, MultimediaDTO dto, MultipartFile image, MultipartFile pdf) {
         Multimedia multimedia = multimediaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Multimedia not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le multimedia avec l'id " + id + " n'existe pas."));
 
         multimedia.setTitle(dto.getTitle());
         multimedia.setDescription(dto.getDescription());
@@ -72,7 +73,7 @@ public class MultimediaService {
     @Transactional
     public MultimediaDTO updatePartial(Long id, MultimediaDTO dto, MultipartFile image, MultipartFile pdf) {
         Multimedia multimedia = multimediaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Multimedia not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le multimedia avec l'id " + id + " n'existe pas."));
 
         if (dto.getTitle() != null) {
             multimedia.setTitle(dto.getTitle());
@@ -94,9 +95,9 @@ public class MultimediaService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public String delete(Long id) {
         Multimedia multimedia = multimediaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Multimedia not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le multimedia avec l'id " + id + " n'existe pas."));
 
         if (multimedia.getImageUrl() != null) {
             fileStorageService.delete(multimedia.getImageUrl());
@@ -107,6 +108,7 @@ public class MultimediaService {
         }
 
         multimediaRepository.delete(multimedia);
+        return "Le multimedia a été supprimé avec succès.";
     }
 
     private void replaceImage(Multimedia multimedia, MultipartFile image) {
