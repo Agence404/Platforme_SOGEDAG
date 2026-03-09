@@ -29,6 +29,4 @@ public class AdminUser {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    @Column(unique = true, nullable = false, length = 30)
-    private String phoneNumber;
 }

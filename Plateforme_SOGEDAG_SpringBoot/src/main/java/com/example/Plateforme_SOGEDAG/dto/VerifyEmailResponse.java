@@ -7,9 +7,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class LoginResponse {
+public class VerifyEmailResponse {
     private String message;
-    private String preAuthToken;
-    private String email;
-
+    private String accessToken;
+    private String tokenType;
 }

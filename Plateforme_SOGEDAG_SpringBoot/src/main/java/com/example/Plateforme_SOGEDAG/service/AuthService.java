@@ -1,15 +1,14 @@
 package com.example.Plateforme_SOGEDAG.service;
 
-
 import com.example.Plateforme_SOGEDAG.dto.LoginRequest;
 import com.example.Plateforme_SOGEDAG.dto.LoginResponse;
-import com.example.Plateforme_SOGEDAG.dto.VerifyPhoneRequest;
-import com.example.Plateforme_SOGEDAG.dto.VerifyPhoneResponse;
+import com.example.Plateforme_SOGEDAG.dto.VerifyEmailRequest;
+import com.example.Plateforme_SOGEDAG.dto.VerifyEmailResponse;
 import com.example.Plateforme_SOGEDAG.exception.CustomAppException;
 import com.example.Plateforme_SOGEDAG.models.AdminUser;
-import com.example.Plateforme_SOGEDAG.models.PhoneVerificationCode;
+import com.example.Plateforme_SOGEDAG.models.EmailVerificationCode;
 import com.example.Plateforme_SOGEDAG.models.enums.TokenType;
-import com.example.Plateforme_SOGEDAG.repo.PhoneVerificationCodeRepository;
+import com.example.Plateforme_SOGEDAG.repo.EmailVerificationCodeRepository;
 import com.example.Plateforme_SOGEDAG.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,10 +23,13 @@ import java.util.Random;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final PhoneVerificationCodeRepository phoneVerificationCodeRepository;
+    private final EmailVerificationCodeRepository emailVerificationCodeRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
-    private final SmsService smsService;
+    private final EmailService emailService;
+
+    private static final long OTP_EXPIRATION_MINUTES = 1;
+    private static final int MAX_ATTEMPTS = 5;
 
     public LoginResponse login(LoginRequest request) {
         AdminUser user = userRepository.findByEmail(request.getEmail())
@@ -54,33 +56,34 @@ public class AuthService {
         }
 
         String code = generateOtp();
-        PhoneVerificationCode phoneCode = phoneVerificationCodeRepository
+        LocalDateTime now = LocalDateTime.now();
+
+        EmailVerificationCode emailCode = emailVerificationCodeRepository
                 .findTopByEmailAndUsedFalseOrderByCreatedAtDesc(user.getEmail())
-                .orElse(PhoneVerificationCode.builder()
+                .orElse(EmailVerificationCode.builder()
                         .email(user.getEmail())
                         .build());
 
-        phoneCode.setCode(code);
-        phoneCode.setUsed(false);
-        phoneCode.setAttempts(0);
-        phoneCode.setCreatedAt(LocalDateTime.now());
-        phoneCode.setExpiresAt(LocalDateTime.now().plusMinutes(5));
+        emailCode.setCode(code);
+        emailCode.setUsed(false);
+        emailCode.setAttempts(0);
+        emailCode.setCreatedAt(now);
+        emailCode.setExpiresAt(now.plusMinutes(OTP_EXPIRATION_MINUTES));
 
-        phoneVerificationCodeRepository.save(phoneCode);
+        emailVerificationCodeRepository.save(emailCode);
 
-        smsService.sendVerificationCode(user.getPhoneNumber(), code);
+        emailService.sendVerificationCode(user.getEmail(), code);
 
         String preAuthToken = jwtService.generatePreAuthToken(user.getEmail(), user.getRole());
 
         return LoginResponse.builder()
-                .message("Phone verification code sent successfully.")
+                .message("Verification code sent successfully to email.")
                 .preAuthToken(preAuthToken)
                 .email(user.getEmail())
-                .maskedPhone(maskPhone(user.getPhoneNumber()))
                 .build();
     }
 
-    public VerifyPhoneResponse verifyPhone(VerifyPhoneRequest request) {
+    public VerifyEmailResponse verifyEmail(VerifyEmailRequest request) {
         if (!jwtService.isTokenValid(request.getPreAuthToken())) {
             throw new CustomAppException(
                     HttpStatus.UNAUTHORIZED,
@@ -107,7 +110,7 @@ public class AuthService {
                         "No user found for this token."
                 ));
 
-        PhoneVerificationCode phoneCode = phoneVerificationCodeRepository
+        EmailVerificationCode emailCode = emailVerificationCodeRepository
                 .findTopByEmailAndUsedFalseOrderByCreatedAtDesc(email)
                 .orElseThrow(() -> new CustomAppException(
                         HttpStatus.BAD_REQUEST,
@@ -115,7 +118,7 @@ public class AuthService {
                         "No active verification code found."
                 ));
 
-        if (phoneCode.isUsed()) {
+        if (emailCode.isUsed()) {
             throw new CustomAppException(
                     HttpStatus.BAD_REQUEST,
                     "Code already used",
@@ -123,7 +126,7 @@ public class AuthService {
             );
         }
 
-        if (phoneCode.getExpiresAt().isBefore(LocalDateTime.now())) {
+        if (emailCode.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new CustomAppException(
                     HttpStatus.BAD_REQUEST,
                     "Code expired",
@@ -131,7 +134,7 @@ public class AuthService {
             );
         }
 
-        if (phoneCode.getAttempts() >= 5) {
+        if (emailCode.getAttempts() >= MAX_ATTEMPTS) {
             throw new CustomAppException(
                     HttpStatus.TOO_MANY_REQUESTS,
                     "Too many attempts",
@@ -139,9 +142,9 @@ public class AuthService {
             );
         }
 
-        if (!phoneCode.getCode().equals(request.getCode())) {
-            phoneCode.setAttempts(phoneCode.getAttempts() + 1);
-            phoneVerificationCodeRepository.save(phoneCode);
+        if (!emailCode.getCode().equals(request.getCode())) {
+            emailCode.setAttempts(emailCode.getAttempts() + 1);
+            emailVerificationCodeRepository.save(emailCode);
 
             throw new CustomAppException(
                     HttpStatus.BAD_REQUEST,
@@ -150,13 +153,13 @@ public class AuthService {
             );
         }
 
-        phoneCode.setUsed(true);
-        phoneVerificationCodeRepository.save(phoneCode);
+        emailCode.setUsed(true);
+        emailVerificationCodeRepository.save(emailCode);
 
         String accessToken = jwtService.generateAccessToken(user.getEmail(), user.getRole());
 
-        return VerifyPhoneResponse.builder()
-                .message("Phone verified successfully.")
+        return VerifyEmailResponse.builder()
+                .message("Email verified successfully.")
                 .accessToken(accessToken)
                 .tokenType("Bearer")
                 .build();
@@ -165,10 +168,5 @@ public class AuthService {
     private String generateOtp() {
         int otp = 100000 + new Random().nextInt(900000);
         return String.valueOf(otp);
-    }
-
-    private String maskPhone(String phone) {
-        if (phone == null || phone.length() < 4) return "****";
-        return "******" + phone.substring(phone.length() - 4);
     }
 }

@@ -6,12 +6,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "phone_verification_codes")
+@Table(name = "email_verification_codes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhoneVerificationCode {
+public class EmailVerificationCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
