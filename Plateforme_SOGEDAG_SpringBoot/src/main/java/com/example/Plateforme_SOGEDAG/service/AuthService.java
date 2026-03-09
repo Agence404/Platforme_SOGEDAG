@@ -72,8 +72,7 @@ public class AuthService {
 
         emailVerificationCodeRepository.save(emailCode);
 
-        emailService.sendVerificationCode(user.getEmail(), code);
-
+        emailService.sendVerificationCode(user.getEmail(), user.getEmail(), code);
         String preAuthToken = jwtService.generatePreAuthToken(user.getEmail(), user.getRole());
 
         return LoginResponse.builder()
