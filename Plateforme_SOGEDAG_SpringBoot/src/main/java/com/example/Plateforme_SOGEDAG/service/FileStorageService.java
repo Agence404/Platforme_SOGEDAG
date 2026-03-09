@@ -25,18 +25,24 @@ public class FileStorageService {
     public void init() {
         try {
             Files.createDirectories(rootLocation);
+
             Files.createDirectories(rootLocation.resolve("blogs"));
             Files.createDirectories(rootLocation.resolve("blogs/images"));
-            Files.createDirectories(rootLocation.resolve("product-images"));
-            Files.createDirectories(rootLocation.resolve("pdfs"));
+
+            Files.createDirectories(rootLocation.resolve("products"));
+            Files.createDirectories(rootLocation.resolve("products/images"));
+            Files.createDirectories(rootLocation.resolve("products/pdfs"));
+
             Files.createDirectories(rootLocation.resolve("multimedia"));
             Files.createDirectories(rootLocation.resolve("multimedia/images"));
             Files.createDirectories(rootLocation.resolve("multimedia/pdfs"));
 
             System.out.println("Uploads folder = " + rootLocation);
-            System.out.println("Blogs folder = " + rootLocation.resolve("blogs"));
-            System.out.println("Product images folder = " + rootLocation.resolve("product-images"));
-            System.out.println("PDFs folder = " + rootLocation.resolve("pdfs"));
+            System.out.println("Blogs images folder = " + rootLocation.resolve("blogs/images"));
+            System.out.println("Products images folder = " + rootLocation.resolve("products/images"));
+            System.out.println("Products pdfs folder = " + rootLocation.resolve("products/pdfs"));
+            System.out.println("Multimedia images folder = " + rootLocation.resolve("multimedia/images"));
+            System.out.println("Multimedia pdfs folder = " + rootLocation.resolve("multimedia/pdfs"));
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize storage", e);
         }
@@ -50,7 +56,6 @@ public class FileStorageService {
         return storeInFolder(file, "multimedia/pdfs");
     }
 
-    // ancien comportement: stocke directement dans /uploads
     public String store(MultipartFile file) {
         try {
             if (file == null || file.isEmpty()) {
@@ -70,21 +75,16 @@ public class FileStorageService {
         }
     }
 
-    // nouvelles méthodes organisées par dossier
     public String storeBlogImage(MultipartFile file) {
         return storeInFolder(file, "blogs/images");
     }
 
-//    public String storeBlogPdf(MultipartFile file) {
-//        return storeInFolder(file, "blogs/pdfs");
-//    }
-
     public String storeProductImage(MultipartFile file) {
-        return storeInFolder(file, "product-images");
+        return storeInFolder(file, "products/images");
     }
 
     public String storePdf(MultipartFile file) {
-        return storeInFolder(file, "pdfs");
+        return storeInFolder(file, "products/pdfs");
     }
 
     private String storeInFolder(MultipartFile file, String folder) {
