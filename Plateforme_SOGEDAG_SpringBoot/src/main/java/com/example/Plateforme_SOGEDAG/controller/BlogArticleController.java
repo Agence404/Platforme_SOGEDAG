@@ -1,5 +1,6 @@
 package com.example.Plateforme_SOGEDAG.controller;
 
+import com.example.Plateforme_SOGEDAG.dto.ApiResponse;
 import com.example.Plateforme_SOGEDAG.dto.BlogArticleDTO;
 import com.example.Plateforme_SOGEDAG.models.enums.ContentStatus;
 import com.example.Plateforme_SOGEDAG.service.BlogArticleService;
@@ -31,7 +32,7 @@ public class BlogArticleController {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<BlogArticleDTO> create(
+    public ResponseEntity<ApiResponse> create(
             @RequestParam("titre") String titre,
             @RequestParam("contenu") String contenu,
             @RequestParam("auteur") String auteur,
@@ -50,11 +51,18 @@ public class BlogArticleController {
                 .carrenceIds(carrenceIds)
                 .build();
 
-        return ResponseEntity.ok(blogArticleService.create(dto, image));
+        blogArticleService.create(dto, image);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le blog a été créé avec succès.")
+                        .build()
+        );
     }
 
     @PutMapping(value = "/{id}", consumes = "multipart/form-data")
-    public ResponseEntity<BlogArticleDTO> updateFull(
+    public ResponseEntity<ApiResponse> updateFull(
             @PathVariable Long id,
             @RequestParam("titre") String titre,
             @RequestParam("contenu") String contenu,
@@ -74,11 +82,18 @@ public class BlogArticleController {
                 .carrenceIds(carrenceIds)
                 .build();
 
-        return ResponseEntity.ok(blogArticleService.updateFull(id, dto, image));
+        blogArticleService.updateFull(id, dto, image);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le blog a été modifié avec succès.")
+                        .build()
+        );
     }
 
     @PatchMapping(value = "/{id}", consumes = "multipart/form-data")
-    public ResponseEntity<BlogArticleDTO> updatePartial(
+    public ResponseEntity<ApiResponse> updatePartial(
             @PathVariable Long id,
             @RequestParam(value = "titre", required = false) String titre,
             @RequestParam(value = "contenu", required = false) String contenu,
@@ -98,12 +113,25 @@ public class BlogArticleController {
                 .carrenceIds(carrenceIds)
                 .build();
 
-        return ResponseEntity.ok(blogArticleService.updatePartial(id, dto, image));
+        blogArticleService.updatePartial(id, dto, image);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Le blog a été mis à jour partiellement avec succès.")
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        blogArticleService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+        String message = blogArticleService.delete(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message(message)
+                        .build()
+        );
     }
 }

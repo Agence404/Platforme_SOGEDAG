@@ -1,5 +1,6 @@
 package com.example.Plateforme_SOGEDAG.controller;
 
+import com.example.Plateforme_SOGEDAG.dto.ApiResponse;
 import com.example.Plateforme_SOGEDAG.dto.ProduitDTO;
 import com.example.Plateforme_SOGEDAG.models.Carrence;
 import com.example.Plateforme_SOGEDAG.models.ProductImage;
@@ -105,9 +106,12 @@ public class ProduitController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        produitService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse<Object>> delete(@PathVariable Long id) {
+        String message = produitService.delete(id);
+        return ResponseEntity.ok(ApiResponse.builder()
+                .success(true)
+                .message(message)
+                .build());
     }
     @PatchMapping("/{id}/archive")
     public ResponseEntity<ProduitDTO> archive(@PathVariable Long id) {

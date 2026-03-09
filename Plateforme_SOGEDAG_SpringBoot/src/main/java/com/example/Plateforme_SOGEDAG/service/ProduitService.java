@@ -1,6 +1,7 @@
 package com.example.Plateforme_SOGEDAG.service;
 
 import com.example.Plateforme_SOGEDAG.dto.ProduitDTO;
+import com.example.Plateforme_SOGEDAG.exception.ResourceNotFoundException;
 import com.example.Plateforme_SOGEDAG.models.Carrence;
 import com.example.Plateforme_SOGEDAG.models.ProductImage;
 import com.example.Plateforme_SOGEDAG.models.Produit;
@@ -195,12 +196,14 @@ public class ProduitService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public String delete(Long id) {
         Produit produit = produitRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le produit avec l'id " + id + " n'existe pas."));
 
         produit.setArchived(true);
         produitRepository.save(produit);
+
+        return "Le produit a été supprimé avec succès.";
     }
 
     @Transactional

@@ -53,7 +53,6 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.builder()
                         .success(false)
                         .message("Une erreur interne est survenue.")
-                        .data(null)
                         .build());
     }
 }
