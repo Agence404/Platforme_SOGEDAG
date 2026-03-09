@@ -7,6 +7,7 @@ import com.example.Plateforme_SOGEDAG.repo.BlogArticleRepository;
 import com.example.Plateforme_SOGEDAG.repo.CarrenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -36,14 +37,19 @@ public class BlogArticleService {
         return mapToDTO(article);
     }
 
+    @Transactional
     public BlogArticleDTO create(BlogArticleDTO dto, MultipartFile image) {
         String imageUrl = null;
+
         if (image != null && !image.isEmpty()) {
-            imageUrl = fileStorageService.store(image);
+            imageUrl = fileStorageService.storeBlogImage(image);
         }
 
-        Set<Carrence> carrences = new HashSet<>(carrenceRepository
-                .findAllById(dto.getCarrenceIds() != null ? dto.getCarrenceIds() : Collections.emptySet()));
+        Set<Long> carrenceIds = dto.getCarrenceIds() != null
+                ? dto.getCarrenceIds()
+                : Collections.emptySet();
+
+        Set<Carrence> carrences = new HashSet<>(carrenceRepository.findAllById(carrenceIds));
 
         BlogArticle article = BlogArticle.builder()
                 .titre(dto.getTitre())
@@ -58,39 +64,87 @@ public class BlogArticleService {
         return mapToDTO(blogArticleRepository.save(article));
     }
 
-    public BlogArticleDTO update(Long id, BlogArticleDTO dto, MultipartFile image) {
+    @Transactional
+    public BlogArticleDTO updateFull(Long id, BlogArticleDTO dto, MultipartFile image) {
         BlogArticle article = blogArticleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        Set<Long> carrenceIds = dto.getCarrenceIds() != null
+                ? dto.getCarrenceIds()
+                : Collections.emptySet();
+
+        Set<Carrence> carrences = new HashSet<>(carrenceRepository.findAllById(carrenceIds));
 
         article.setTitre(dto.getTitre());
         article.setContenu(dto.getContenu());
         article.setAuteur(dto.getAuteur());
         article.setStatus(dto.getStatus());
-        if (dto.getDatePublication() != null) {
-            article.setDatePublication(dto.getDatePublication());
-        }
+        article.setDatePublication(dto.getDatePublication() != null ? dto.getDatePublication() : LocalDateTime.now());
+        article.setCarrences(carrences);
 
         if (image != null && !image.isEmpty()) {
-            if (article.getImageCouverture() != null) {
-                fileStorageService.delete(article.getImageCouverture());
-            }
-            article.setImageCouverture(fileStorageService.store(image));
-        }
-
-        if (dto.getCarrenceIds() != null) {
-            article.setCarrences(new HashSet<>(carrenceRepository.findAllById(dto.getCarrenceIds())));
+            replaceImage(article, image);
         }
 
         return mapToDTO(blogArticleRepository.save(article));
     }
 
+    @Transactional
+    public BlogArticleDTO updatePartial(Long id, BlogArticleDTO dto, MultipartFile image) {
+        BlogArticle article = blogArticleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        if (dto.getTitre() != null) {
+            article.setTitre(dto.getTitre());
+        }
+
+        if (dto.getContenu() != null) {
+            article.setContenu(dto.getContenu());
+        }
+
+        if (dto.getAuteur() != null) {
+            article.setAuteur(dto.getAuteur());
+        }
+
+        if (dto.getStatus() != null) {
+            article.setStatus(dto.getStatus());
+        }
+
+        if (dto.getDatePublication() != null) {
+            article.setDatePublication(dto.getDatePublication());
+        }
+
+        if (dto.getCarrenceIds() != null) {
+            Set<Carrence> carrences = new HashSet<>(carrenceRepository.findAllById(dto.getCarrenceIds()));
+            article.setCarrences(carrences);
+        }
+
+        if (image != null && !image.isEmpty()) {
+            replaceImage(article, image);
+        }
+
+        return mapToDTO(blogArticleRepository.save(article));
+    }
+
+    @Transactional
     public void delete(Long id) {
         BlogArticle article = blogArticleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
+
         if (article.getImageCouverture() != null) {
             fileStorageService.delete(article.getImageCouverture());
         }
+
         blogArticleRepository.delete(article);
+    }
+
+    private void replaceImage(BlogArticle article, MultipartFile image) {
+        if (article.getImageCouverture() != null) {
+            fileStorageService.delete(article.getImageCouverture());
+        }
+
+        String newImageUrl = fileStorageService.storeBlogImage(image);
+        article.setImageCouverture(newImageUrl);
     }
 
     private BlogArticleDTO mapToDTO(BlogArticle article) {
@@ -102,7 +156,9 @@ public class BlogArticleService {
                 .imageCouverture(article.getImageCouverture())
                 .status(article.getStatus())
                 .datePublication(article.getDatePublication())
-                .carrenceIds(article.getCarrences().stream().map(Carrence::getId).collect(Collectors.toSet()))
+                .carrenceIds(article.getCarrences().stream()
+                        .map(Carrence::getId)
+                        .collect(Collectors.toSet()))
                 .build();
     }
 }

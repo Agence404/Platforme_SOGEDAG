@@ -25,12 +25,20 @@ public class FileStorageService {
     public void init() {
         try {
             Files.createDirectories(rootLocation);
+            Files.createDirectories(rootLocation.resolve("blogs"));
+            Files.createDirectories(rootLocation.resolve("product-images"));
+            Files.createDirectories(rootLocation.resolve("pdfs"));
+
             System.out.println("Uploads folder = " + rootLocation);
+            System.out.println("Blogs folder = " + rootLocation.resolve("blogs"));
+            System.out.println("Product images folder = " + rootLocation.resolve("product-images"));
+            System.out.println("PDFs folder = " + rootLocation.resolve("pdfs"));
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize storage", e);
         }
     }
 
+    // ancien comportement: stocke directement dans /uploads
     public String store(MultipartFile file) {
         try {
             if (file == null || file.isEmpty()) {
@@ -45,6 +53,40 @@ public class FileStorageService {
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
             return filename;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file.", e);
+        }
+    }
+
+    // nouvelles méthodes organisées par dossier
+    public String storeBlogImage(MultipartFile file) {
+        return storeInFolder(file, "blogs");
+    }
+
+    public String storeProductImage(MultipartFile file) {
+        return storeInFolder(file, "product-images");
+    }
+
+    public String storePdf(MultipartFile file) {
+        return storeInFolder(file, "pdfs");
+    }
+
+    private String storeInFolder(MultipartFile file, String folder) {
+        try {
+            if (file == null || file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file.");
+            }
+
+            String originalFilename = Paths.get(file.getOriginalFilename()).getFileName().toString();
+            String filename = UUID.randomUUID() + "_" + originalFilename;
+
+            Path destinationFolder = rootLocation.resolve(folder).normalize();
+            Files.createDirectories(destinationFolder);
+
+            Path destinationFile = destinationFolder.resolve(filename).normalize();
+            Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+
+            return folder + "/" + filename;
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file.", e);
         }
@@ -67,6 +109,10 @@ public class FileStorageService {
 
     public void delete(String filename) {
         try {
+            if (filename == null || filename.isBlank()) {
+                return;
+            }
+
             Path file = rootLocation.resolve(filename).normalize();
             Files.deleteIfExists(file);
         } catch (IOException e) {
