@@ -29,7 +29,6 @@ public class Produit {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ContentStatus status;
@@ -44,11 +43,7 @@ public class Produit {
     private LocalDateTime updatedAt;
 
     @ManyToMany
-    @JoinTable(
-            name = "produit_carrences",
-            joinColumns = @JoinColumn(name = "produit_id"),
-            inverseJoinColumns = @JoinColumn(name = "carrence_id")
-    )
+    @JoinTable(name = "produit_carrences", joinColumns = @JoinColumn(name = "produit_id"), inverseJoinColumns = @JoinColumn(name = "carrence_id"))
     @Builder.Default
     private Set<Carrence> carrences = new HashSet<>();
 
@@ -56,6 +51,9 @@ public class Produit {
     @OrderBy("displayOrder ASC")
     @Builder.Default
     private List<ProductImage> images = new ArrayList<>();
+
+    @Column(name = "pdf_url", length = 500)
+    private String pdfUrl;
 
     @PrePersist
     public void prePersist() {

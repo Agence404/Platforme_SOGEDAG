@@ -27,11 +27,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**",
+                                "/api/categories/**", "/api/blogs/**", "/api/multimedia/**", "/api/files/**")
+                        .permitAll()
+                        .requestMatchers("/api/products/**", "/api/categories/**", "/api/blogs/**",
+                                "/api/multimedia/**")
+                        .hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
