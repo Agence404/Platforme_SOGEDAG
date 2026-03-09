@@ -1,6 +1,7 @@
 package com.example.Plateforme_SOGEDAG.service;
 
 import com.example.Plateforme_SOGEDAG.dto.BlogArticleDTO;
+import com.example.Plateforme_SOGEDAG.exception.ResourceNotFoundException;
 import com.example.Plateforme_SOGEDAG.models.BlogArticle;
 import com.example.Plateforme_SOGEDAG.models.Carrence;
 import com.example.Plateforme_SOGEDAG.repo.BlogArticleRepository;
@@ -33,8 +34,7 @@ public class BlogArticleService {
 
     public BlogArticleDTO getById(Long id) {
         BlogArticle article = blogArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
-        return mapToDTO(article);
+                .orElseThrow(() -> new ResourceNotFoundException("Le blog avec l'id " + id + " n'existe pas."));        return mapToDTO(article);
     }
 
     @Transactional
@@ -67,8 +67,7 @@ public class BlogArticleService {
     @Transactional
     public BlogArticleDTO updateFull(Long id, BlogArticleDTO dto, MultipartFile image) {
         BlogArticle article = blogArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Le blog avec l'id " + id + " n'existe pas."));
         Set<Long> carrenceIds = dto.getCarrenceIds() != null
                 ? dto.getCarrenceIds()
                 : Collections.emptySet();
@@ -92,8 +91,7 @@ public class BlogArticleService {
     @Transactional
     public BlogArticleDTO updatePartial(Long id, BlogArticleDTO dto, MultipartFile image) {
         BlogArticle article = blogArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Le blog avec l'id " + id + " n'existe pas."));
         if (dto.getTitre() != null) {
             article.setTitre(dto.getTitre());
         }
@@ -127,17 +125,17 @@ public class BlogArticleService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public String delete(Long id) {
         BlogArticle article = blogArticleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Le blog avec l'id " + id + " n'existe pas."));
 
         if (article.getImageCouverture() != null) {
             fileStorageService.delete(article.getImageCouverture());
         }
 
         blogArticleRepository.delete(article);
+        return "Le blog a été supprimé avec succès.";
     }
-
     private void replaceImage(BlogArticle article, MultipartFile image) {
         if (article.getImageCouverture() != null) {
             fileStorageService.delete(article.getImageCouverture());
