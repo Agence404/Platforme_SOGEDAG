@@ -28,7 +28,7 @@ export default function Dashboard() {
             label: "Sessions",
             data: [14, 18, 22, 21, 29, 34, 39, 44],
             borderColor: "#2f8448",
-            backgroundColor: "rgba(104,200,111,0.16)",
+            backgroundColor: "rgba(74, 155, 80, 0.16)",
             fill: true,
             tension: 0.35,
             borderWidth: 3,
