@@ -3,11 +3,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import './About.css';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const aboutRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -452,55 +454,41 @@ export default function About() {
         </div>
 
         <div className="about-hero__inner">
-          <p className="about-hero__eyebrow">À propos de SOGEDAG</p>
+          <p className="about-hero__eyebrow">{t('about.hero.eyebrow')}</p>
           <h1 className="about-hero__title">
-            Une entreprise agricole pensée
-            <span> pour la performance, la rigueur et le terrain</span>
+            {t('about.hero.title')}
+            <span> {t('about.hero.titleAccent')}</span>
           </h1>
-          <p className="about-hero__text">
-            Nous développons une vision agricole fondée sur l’expertise agronomique,
-            l’accompagnement technique et la cohérence des solutions appliquées sur le terrain.
-          </p>
+          <p className="about-hero__text">{t('about.hero.text')}</p>
         </div>
       </section>
 
       <section className="about-manifesto">
         <div className="about-manifesto__inner">
           <div className="about-manifesto__copy">
-            <p className="about-manifesto__eyebrow">Notre manifeste</p>
+            <p className="about-manifesto__eyebrow">{t('about.manifesto.eyebrow')}</p>
             <h2 className="about-manifesto__title">
-              Construire une agriculture
-              <span> plus lisible, plus technique et plus durable</span>
+              {t('about.manifesto.title')}
+              <span> {t('about.manifesto.titleAccent')}</span>
             </h2>
-            <p className="about-manifesto__text">
-              SOGEDAG s’inscrit dans une logique d’exigence agronomique, de proximité terrain
-              et d’amélioration continue. Notre objectif n’est pas seulement de proposer des
-              solutions, mais de contribuer à des décisions techniques cohérentes, durables
-              et réellement adaptées aux cultures.
-            </p>
-            <p className="about-manifesto__text">
-              Nous croyons à une agriculture performante fondée sur la compréhension du terrain,
-              la précision des besoins et la qualité de l’accompagnement.
-            </p>
+            <p className="about-manifesto__text">{t('about.manifesto.text1')}</p>
+            <p className="about-manifesto__text">{t('about.manifesto.text2')}</p>
           </div>
 
           <div className="about-manifesto__media">
-            <img src="image 3.jpg" alt="Expertise agricole terrain" />
+            <img src="image 3.jpg" alt={t('about.manifesto.imageAlt')} />
           </div>
         </div>
       </section>
 
       <section className="about-timeline">
         <div className="about-section-head">
-          <p className="about-timeline__eyebrow">Notre trajectoire</p>
+          <p className="about-timeline__eyebrow">{t('about.timeline.eyebrow')}</p>
           <h2 className="about-timeline__title">
-            Une progression construite autour
-            <span> du terrain et de l’expertise</span>
+            {t('about.timeline.title')}
+            <span> {t('about.timeline.titleAccent')}</span>
           </h2>
-          <p className="about-timeline__subtitle">
-            Une évolution guidée par la rigueur technique, l’écoute des besoins réels
-            et la volonté d’apporter des réponses durables au secteur agricole.
-          </p>
+          <p className="about-timeline__subtitle">{t('about.timeline.subtitle')}</p>
         </div>
 
         <div className="about-timeline__track">
@@ -510,38 +498,26 @@ export default function About() {
 
           <article className="about-timeline__step about-timeline__step--left">
             <span className="about-timeline__step-index">01</span>
-            <h3>Observation terrain</h3>
-            <p>
-              Une compréhension fine des cultures, des sols et des contraintes locales comme
-              point de départ de notre démarche.
-            </p>
+            <h3>{t('about.timeline.steps.one.title')}</h3>
+            <p>{t('about.timeline.steps.one.text')}</p>
           </article>
 
           <article className="about-timeline__step about-timeline__step--right">
             <span className="about-timeline__step-index">02</span>
-            <h3>Construction technique</h3>
-            <p>
-              Une sélection de solutions cohérentes, pensées pour répondre à des objectifs
-              agronomiques précis et durables.
-            </p>
+            <h3>{t('about.timeline.steps.two.title')}</h3>
+            <p>{t('about.timeline.steps.two.text')}</p>
           </article>
 
           <article className="about-timeline__step about-timeline__step--left">
             <span className="about-timeline__step-index">03</span>
-            <h3>Accompagnement</h3>
-            <p>
-              Une présence terrain qui transforme la recommandation en action claire,
-              ajustée et suivie dans le temps.
-            </p>
+            <h3>{t('about.timeline.steps.three.title')}</h3>
+            <p>{t('about.timeline.steps.three.text')}</p>
           </article>
 
           <article className="about-timeline__step about-timeline__step--right">
             <span className="about-timeline__step-index">04</span>
-            <h3>Performance durable</h3>
-            <p>
-              Une vision de long terme orientée vers la régularité, l’équilibre et la
-              valorisation durable des cultures.
-            </p>
+            <h3>{t('about.timeline.steps.four.title')}</h3>
+            <p>{t('about.timeline.steps.four.text')}</p>
           </article>
         </div>
       </section>
@@ -549,100 +525,78 @@ export default function About() {
       <section className="about-vision">
         <div className="about-vision__inner">
           <div className="about-vision__copy">
-            <p className="about-vision__eyebrow">Notre vision</p>
+            <p className="about-vision__eyebrow">{t('about.vision.eyebrow')}</p>
             <h2 className="about-vision__title">
-              Faire du conseil agronomique
-              <span> un levier de décision et de confiance</span>
+              {t('about.vision.title')}
+              <span> {t('about.vision.titleAccent')}</span>
             </h2>
-            <p className="about-vision__text">
-              Notre vision repose sur une agriculture où la technique reste lisible,
-              le terrain reste central, et les solutions s’intègrent dans une logique
-              globale de performance durable.
-            </p>
-            <p className="about-vision__text">
-              Chaque recommandation doit être compréhensible, chaque solution doit être
-              cohérente, et chaque intervention doit contribuer à renforcer la qualité
-              des décisions prises sur l’exploitation.
-            </p>
+            <p className="about-vision__text">{t('about.vision.text1')}</p>
+            <p className="about-vision__text">{t('about.vision.text2')}</p>
           </div>
 
           <div className="about-vision__media">
-            <img src="image 2.jpg" alt="Vision agronomique et performance" />
+            <img src="image 2.jpg" alt={t('about.vision.imageAlt')} />
           </div>
         </div>
       </section>
 
       <section className="about-metrics">
         <div className="about-section-head">
-          <p className="about-metrics__eyebrow">Repères</p>
+          <p className="about-metrics__eyebrow">{t('about.metrics.eyebrow')}</p>
           <h2 className="about-metrics__title">
-            Des chiffres qui traduisent
-            <span> notre présence terrain</span>
+            {t('about.metrics.title')}
+            <span> {t('about.metrics.titleAccent')}</span>
           </h2>
-          <p className="about-metrics__subtitle">
-            Une dynamique fondée sur la constance, la proximité et l’exigence technique.
-          </p>
+          <p className="about-metrics__subtitle">{t('about.metrics.subtitle')}</p>
         </div>
 
         <div className="about-metrics__grid">
           <article className="about-metric">
             <strong>10+</strong>
-            <span>Années d’expérience</span>
+            <span>{t('about.metrics.items.experience')}</span>
           </article>
 
           <article className="about-metric">
             <strong>500+</strong>
-            <span>Clients accompagnés</span>
+            <span>{t('about.metrics.items.clients')}</span>
           </article>
 
           <article className="about-metric">
             <strong>98%</strong>
-            <span>Satisfaction partenaire</span>
+            <span>{t('about.metrics.items.satisfaction')}</span>
           </article>
 
           <article className="about-metric">
             <strong>24/7</strong>
-            <span>Exigence de suivi</span>
+            <span>{t('about.metrics.items.followup')}</span>
           </article>
         </div>
       </section>
 
       <section className="about-values">
         <div className="about-section-head">
-          <p className="about-values__eyebrow">Nos valeurs</p>
+          <p className="about-values__eyebrow">{t('about.values.eyebrow')}</p>
           <h2 className="about-values__title">
-            Une culture d’entreprise
-            <span> portée par la rigueur et l’engagement</span>
+            {t('about.values.title')}
+            <span> {t('about.values.titleAccent')}</span>
           </h2>
-          <p className="about-values__subtitle">
-            Nos valeurs structurent notre posture terrain, nos choix techniques et
-            notre manière d’accompagner durablement nos partenaires.
-          </p>
+          <p className="about-values__subtitle">{t('about.values.subtitle')}</p>
         </div>
 
         <div className="about-values__grid">
           <article className="about-value">
-            <h3>Rigueur</h3>
-            <p>
-              Une approche sérieuse et structurée dans le choix des solutions,
-              l’analyse des besoins et la qualité des recommandations.
-            </p>
+            <h3>{t('about.values.items.rigor.title')}</h3>
+            <p>{t('about.values.items.rigor.text')}</p>
           </article>
 
           <article className="about-value">
-            <h3>Proximité</h3>
-            <p>
-              Une relation terrain qui permet de rester en lien avec la réalité des
-              exploitations, des cultures et des enjeux de production.
-            </p>
+            <h3>{t('about.values.items.proximity.title')}</h3>
+            <p>{t('about.values.items.proximity.text')}</p>
           </article>
 
           <article className="about-value">
-            <h3>Responsabilité</h3>
-            <p>
-              Une vision durable de la performance agricole, fondée sur l’équilibre,
-              la lisibilité technique et l’impact dans le temps.
-            </p>
+            <h3>{t('about.values.items.responsibility.title')}</h3>
+            <p>{t('about.values.items.responsibility.text')}</p>
           </article>
         </div>
       </section>
@@ -650,42 +604,35 @@ export default function About() {
       <section className="about-commitment">
         <div className="about-commitment__inner">
           <div className="about-commitment__copy">
-            <p className="about-commitment__eyebrow">Notre engagement</p>
+            <p className="about-commitment__eyebrow">{t('about.commitment.eyebrow')}</p>
             <h2 className="about-commitment__title">
-              Transformer l’expertise
-              <span> en accompagnement concret</span>
+              {t('about.commitment.title')}
+              <span> {t('about.commitment.titleAccent')}</span>
             </h2>
-            <p className="about-commitment__text">
-              Au-delà des produits et des formulations, notre engagement est d’apporter
-              une lecture technique claire, une présence terrain utile et une logique
-              d’accompagnement cohérente avec les réalités agricoles.
-            </p>
+            <p className="about-commitment__text">{t('about.commitment.text')}</p>
           </div>
 
           <div className="about-commitment__panel">
-            <img src="image pepticide.png" alt="Accompagnement technique agricole" />
+            <img src="image pepticide.png" alt={t('about.commitment.imageAlt')} />
           </div>
         </div>
       </section>
 
       <section className="about-cta">
         <div className="about-cta__inner">
-          <p className="about-cta__eyebrow">Construisons ensemble</p>
+          <p className="about-cta__eyebrow">{t('about.cta.eyebrow')}</p>
           <h2 className="about-cta__title">
-            Parlons de vos objectifs
-            <span> et de vos besoins terrain</span>
+            {t('about.cta.title')}
+            <span> {t('about.cta.titleAccent')}</span>
           </h2>
-          <p className="about-cta__text">
-            Notre équipe vous accompagne pour identifier les solutions les plus adaptées
-            à votre contexte cultural et à vos ambitions de performance.
-          </p>
+          <p className="about-cta__text">{t('about.cta.text')}</p>
 
           <div className="about-cta__actions">
             <a href="#contact" className="about-btn about-btn--primary">
-              Demander un devis
+              {t('about.cta.quote')}
             </a>
             <a href="/#catalogue" className="about-btn about-btn--secondary">
-              Voir le catalogue
+              {t('about.cta.catalogue')}
             </a>
           </div>
         </div>

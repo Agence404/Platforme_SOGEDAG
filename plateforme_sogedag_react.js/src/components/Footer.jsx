@@ -3,11 +3,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Footer.css';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
   const footerRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -156,7 +158,7 @@ export default function Footer() {
       <button
         className="sogedag-footer__top"
         type="button"
-        aria-label="Retour en haut"
+        aria-label={t('footer.backToTop')}
         onClick={scrollToTop}
       >
         ↑
@@ -164,61 +166,60 @@ export default function Footer() {
 
       <div className="sogedag-footer__inner">
         <div className="sogedag-footer__header">
-          
           <h2 className="sogedag-footer__title">
-            Agriculture, innovation
+            {t('footer.titleLine1')}
             <br />
-            et accompagnement terrain
+            {t('footer.titleLine2')}
           </h2>
         </div>
 
         <div className="sogedag-footer__columns">
           <div className="sogedag-footer__col">
-            <h3>SOGEDAG</h3>
+            <h3>{t('footer.company.title')}</h3>
             <p>
-              Solutions agricoles
+              {t('footer.company.line1')}
               <br />
-              Expertise agronomique
+              {t('footer.company.line2')}
               <br />
-              Innovation technique
+              {t('footer.company.line3')}
               <br />
-              Performance durable
+              {t('footer.company.line4')}
             </p>
           </div>
 
           <div className="sogedag-footer__col">
-            <h3>Navigation</h3>
+            <h3>{t('footer.navigation.title')}</h3>
             <ul>
-              <li><a href="#why-us">Pourquoi nous choisir</a></li>
-              <li><a href="#catalogue">Catalogue</a></li>
-              <li><a href="#innovation">Innovation</a></li>
-              <li><a href="#research">Recherche</a></li>
+              <li><a href="#why-us">{t('footer.navigation.whyUs')}</a></li>
+              <li><a href="#catalogue">{t('footer.navigation.catalogue')}</a></li>
+              <li><a href="#innovation">{t('footer.navigation.innovation')}</a></li>
+              <li><a href="#research">{t('footer.navigation.research')}</a></li>
             </ul>
           </div>
 
           <div className="sogedag-footer__col">
-            <h3>Contenu</h3>
+            <h3>{t('footer.content.title')}</h3>
             <ul>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#reviews">Avis clients</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#blog">{t('footer.content.blog')}</a></li>
+              <li><a href="#reviews">{t('footer.content.reviews')}</a></li>
+              <li><a href="#contact">{t('footer.content.contact')}</a></li>
+              <li><a href="#faq">{t('footer.content.faq')}</a></li>
             </ul>
           </div>
 
           <div className="sogedag-footer__col">
-            <h3>Suivre</h3>
+            <h3>{t('footer.follow.title')}</h3>
             <ul>
-              <li><a href="/">Facebook</a></li>
-              <li><a href="/">Instagram</a></li>
-              <li><a href="/">LinkedIn</a></li>
-              <li><a href="/">YouTube</a></li>
+              <li><a href="/">{t('footer.follow.facebook')}</a></li>
+              <li><a href="/">{t('footer.follow.instagram')}</a></li>
+              <li><a href="/">{t('footer.follow.linkedin')}</a></li>
+              <li><a href="/">{t('footer.follow.youtube')}</a></li>
             </ul>
           </div>
         </div>
 
         <div className="sogedag-footer__agency">
-          <span>Réalisé par</span>
+          <span>{t('footer.madeBy')}</span>
           <a
             href="https://www.agence404.agency"
             target="_blank"
@@ -236,12 +237,12 @@ export default function Footer() {
         <div className="sogedag-footer__bottom">
           <div className="sogedag-footer__bottom-left">
             <strong>©2026 SOGEDAG</strong>
-            <span>Tous droits réservés</span>
+            <span>{t('footer.rights')}</span>
           </div>
 
           <div className="sogedag-footer__bottom-right">
-            <Link to="/mentions-legales">Mentions légales</Link>
-            <Link to="/confidentialite">Confidentialité</Link>
+            <Link to="/mentions-legales">{t('footer.legal')}</Link>
+            <Link to="/confidentialite">{t('footer.privacy')}</Link>
           </div>
         </div>
       </div>

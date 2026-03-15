@@ -13,6 +13,7 @@ import ProductDetail from './pages/ProductDetail';
 import Recherche from './pages/Recherche';
 import ResearchDetail from './pages/ResearchDetail';
 import MentionsLegales from './pages/MentionsLegales';
+import "./i18n";
 import Confidentialite from './pages/Confidentialite';
 
 function App() {

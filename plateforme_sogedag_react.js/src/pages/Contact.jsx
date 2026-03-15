@@ -3,11 +3,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import './Contact.css';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const contactRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -232,51 +234,45 @@ export default function Contact() {
         </div>
 
         <div className="contact-hero__inner">
-          <p className="contact-hero__eyebrow">Contact SOGEDAG</p>
+          <p className="contact-hero__eyebrow">{t('contact.hero.eyebrow')}</p>
           <h1 className="contact-hero__title">
-            Restons en lien autour de vos
-            <span> besoins et de vos enjeux terrain</span>
+            {t('contact.hero.title')}
+            <span> {t('contact.hero.titleAccent')}</span>
           </h1>
-          <p className="contact-hero__text">
-            Retrouvez ici les informations essentielles pour contacter SOGEDAG
-            et échanger avec notre équipe.
-          </p>
+          <p className="contact-hero__text">{t('contact.hero.text')}</p>
         </div>
       </section>
 
       <section className="contact-info">
         <div className="contact-info__inner">
           <div className="contact-info__intro">
-            <p className="contact-info__eyebrow">Informations utiles</p>
+            <p className="contact-info__eyebrow">{t('contact.info.eyebrow')}</p>
             <h2 className="contact-info__title">
-              Les coordonnées
-              <span> de SOGEDAG</span>
+              {t('contact.info.title')}
+              <span> {t('contact.info.titleAccent')}</span>
             </h2>
-            <p className="contact-info__text">
-              Notre équipe reste disponible pour répondre à vos demandes
-              commerciales, techniques et générales concernant nos solutions agricoles.
-            </p>
+            <p className="contact-info__text">{t('contact.info.text')}</p>
           </div>
 
           <div className="contact-info__grid">
             <article className="contact-card">
-              <h3>Téléphone</h3>
-              <p>+212 6 00 00 00 00</p>
+              <h3>{t('contact.cards.phone.title')}</h3>
+              <p>{t('contact.cards.phone.value')}</p>
             </article>
 
             <article className="contact-card">
-              <h3>Email</h3>
-              <p>contact@sogedag.com</p>
+              <h3>{t('contact.cards.email.title')}</h3>
+              <p>{t('contact.cards.email.value')}</p>
             </article>
 
             <article className="contact-card">
-              <h3>Adresse</h3>
-              <p>Casablanca, Maroc</p>
+              <h3>{t('contact.cards.address.title')}</h3>
+              <p>{t('contact.cards.address.value')}</p>
             </article>
 
             <article className="contact-card">
-              <h3>Horaires</h3>
-              <p>Lundi — Vendredi / 9h — 18h</p>
+              <h3>{t('contact.cards.hours.title')}</h3>
+              <p>{t('contact.cards.hours.value')}</p>
             </article>
           </div>
         </div>
@@ -285,41 +281,28 @@ export default function Contact() {
       <section className="contact-presence">
         <div className="contact-presence__inner">
           <div className="contact-presence__copy">
-            <p className="contact-presence__eyebrow">Notre disponibilité</p>
+            <p className="contact-presence__eyebrow">{t('contact.presence.eyebrow')}</p>
             <h2 className="contact-presence__title">
-              Une équipe attentive,
-              <span> proche du terrain</span>
+              {t('contact.presence.title')}
+              <span> {t('contact.presence.titleAccent')}</span>
             </h2>
-            <p className="contact-presence__text">
-              SOGEDAG privilégie une relation claire, directe et professionnelle.
-              Notre accompagnement repose sur la compréhension des besoins,
-              la cohérence technique et la proximité avec les réalités du terrain.
-            </p>
+            <p className="contact-presence__text">{t('contact.presence.text')}</p>
           </div>
 
           <div className="contact-presence__grid">
             <article className="contact-presence__panel">
-              <h3>Demandes commerciales</h3>
-              <p>
-                Informations sur nos gammes, besoins en solutions, demande de devis
-                et échanges autour de vos objectifs de production.
-              </p>
+              <h3>{t('contact.presence.panels.sales.title')}</h3>
+              <p>{t('contact.presence.panels.sales.text')}</p>
             </article>
 
             <article className="contact-presence__panel">
-              <h3>Accompagnement technique</h3>
-              <p>
-                Échanges autour des cultures, recommandations agronomiques et
-                orientation vers les solutions les plus cohérentes.
-              </p>
+              <h3>{t('contact.presence.panels.support.title')}</h3>
+              <p>{t('contact.presence.panels.support.text')}</p>
             </article>
 
             <article className="contact-presence__panel">
-              <h3>Partenariats & collaboration</h3>
-              <p>
-                Discussions liées aux opportunités de développement, aux relations
-                professionnelles et aux projets communs.
-              </p>
+              <h3>{t('contact.presence.panels.partnerships.title')}</h3>
+              <p>{t('contact.presence.panels.partnerships.text')}</p>
             </article>
           </div>
         </div>
@@ -327,22 +310,19 @@ export default function Contact() {
 
       <section className="contact-cta">
         <div className="contact-cta__inner">
-          <p className="contact-cta__eyebrow">Demande rapide</p>
+          <p className="contact-cta__eyebrow">{t('contact.cta.eyebrow')}</p>
           <h2 className="contact-cta__title">
-            Vous souhaitez échanger
-            <span> avec notre équipe ?</span>
+            {t('contact.cta.title')}
+            <span> {t('contact.cta.titleAccent')}</span>
           </h2>
-          <p className="contact-cta__text">
-            Accédez rapidement à une demande de devis ou poursuivez votre découverte
-            de l’univers SOGEDAG.
-          </p>
+          <p className="contact-cta__text">{t('contact.cta.text')}</p>
 
           <div className="contact-cta__actions">
             <a href="#contact" className="contact-btn contact-btn--primary">
-              Demander un devis
+              {t('contact.cta.quote')}
             </a>
             <a href="/apropos" className="contact-btn contact-btn--secondary">
-              Découvrir SOGEDAG
+              {t('contact.cta.about')}
             </a>
           </div>
         </div>

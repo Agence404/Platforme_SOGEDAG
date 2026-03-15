@@ -3,51 +3,26 @@ import { useParams, Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import Footer from '../components/Footer';
 import './BlogDetail.css';
+import { useTranslation } from 'react-i18next';
 
 // Exemple local en attendant la vraie base de données / API
 const blogPosts = {
   'comprendre-le-terrain': {
     slug: 'comprendre-le-terrain',
-    title: 'Comprendre le terrain avant toute décision technique',
-    author: 'Équipe SOGEDAG',
+    titleKey: 'blogDetail.posts.comprendreTerrain.title',
+    authorKey: 'blogDetail.posts.comprendreTerrain.author',
     publishedAt: '2026-03-12',
     image: 'image_cata1.jpg',
-    content: `
-      <p>
-        L’observation agronomique reste le point de départ d’une stratégie culturale cohérente.
-        Avant toute intervention, il est essentiel de lire le contexte, les besoins de la culture
-        et les contraintes du terrain.
-      </p>
-
-      <h2>Observer avant d’agir</h2>
-      <p>
-        Toute décision agronomique pertinente commence par une observation précise. L’état de la culture,
-        la structure du sol, l’historique de la parcelle et les conditions climatiques sont autant
-        d’éléments qui permettent de situer le besoin réel.
-      </p>
-
-      <h2>Identifier les besoins réels</h2>
-      <p>
-        Une culture n’exprime pas toujours ses besoins de manière évidente. Il faut savoir croiser
-        les signaux visibles, le stade physiologique et l’objectif de production.
-      </p>
-
-      <blockquote>
-        Une décision technique solide commence toujours par une lecture juste du terrain.
-      </blockquote>
-
-      <h2>Construire une réponse cohérente</h2>
-      <p>
-        L’observation n’a de valeur que si elle conduit à une décision structurée. C’est à ce moment
-        que l’expertise agronomique devient essentielle : transformer les constats en stratégie claire.
-      </p>
-    `,
+    contentKey: 'blogDetail.posts.comprendreTerrain.content',
   },
 };
 
-function formatDate(dateString) {
+function formatDate(dateString, language) {
   if (!dateString) return '';
-  return new Intl.DateTimeFormat('fr-FR', {
+
+  const locale = language && language.startsWith('en') ? 'en-US' : 'fr-FR';
+
+  return new Intl.DateTimeFormat(locale, {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
@@ -63,10 +38,15 @@ function getReadingTime(html = '') {
 export default function BlogDetail() {
   const { slug } = useParams();
   const pageRef = useRef(null);
+  const { t, i18n } = useTranslation();
 
   const post = blogPosts[slug] || blogPosts['comprendre-le-terrain'];
 
-  const readingTime = useMemo(() => getReadingTime(post.content), [post.content]);
+  const translatedContent = t(post.contentKey);
+  const translatedTitle = t(post.titleKey);
+  const translatedAuthor = t(post.authorKey);
+
+  const readingTime = useMemo(() => getReadingTime(translatedContent), [translatedContent]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -119,24 +99,24 @@ export default function BlogDetail() {
     <main ref={pageRef} className="blog-detail-v2">
       <section className="blog-detail-v2__hero">
         <div className="blog-detail-v2__container">
-          <nav className="blog-detail-v2__crumbs" aria-label="Fil d’Ariane">
-            <Link to="/">Accueil</Link>
+          <nav className="blog-detail-v2__crumbs" aria-label={t('blogDetail.breadcrumb')}>
+            <Link to="/">{t('blogDetail.home')}</Link>
             <span>/</span>
-            <Link to="/blog">Blog</Link>
+            <Link to="/blog">{t('blogDetail.blog')}</Link>
             <span>/</span>
-            <span>{post.title}</span>
+            <span>{translatedTitle}</span>
           </nav>
 
           <header className="blog-detail-v2__header">
-            <span className="blog-detail-v2__label">Blog</span>
-            <h1 className="blog-detail-v2__title">{post.title}</h1>
+            <span className="blog-detail-v2__label">{t('blogDetail.label')}</span>
+            <h1 className="blog-detail-v2__title">{translatedTitle}</h1>
 
             <div className="blog-detail-v2__meta">
-              <span>{post.author}</span>
+              <span>{translatedAuthor}</span>
               <span className="blog-detail-v2__dot"></span>
-              <span>{formatDate(post.publishedAt)}</span>
+              <span>{formatDate(post.publishedAt, i18n.language)}</span>
               <span className="blog-detail-v2__dot"></span>
-              <span>{readingTime} min de lecture</span>
+              <span>{t('blogDetail.readingTimeFull', { count: readingTime })}</span>
             </div>
           </header>
         </div>
@@ -145,35 +125,43 @@ export default function BlogDetail() {
       <section className="blog-detail-v2__body">
         <div className="blog-detail-v2__container">
           <div className="blog-detail-v2__cover">
-            <img src={post.image} alt={post.title} className="blog-detail-v2__cover-img" />
+            <img
+              src={post.image}
+              alt={translatedTitle}
+              className="blog-detail-v2__cover-img"
+            />
           </div>
 
           <div className="blog-detail-v2__layout">
             <aside className="blog-detail-v2__sidebar">
               <div className="blog-detail-v2__card">
-                <p className="blog-detail-v2__card-label">Auteur</p>
-                <p className="blog-detail-v2__card-value">{post.author}</p>
+                <p className="blog-detail-v2__card-label">{t('blogDetail.sidebar.author')}</p>
+                <p className="blog-detail-v2__card-value">{translatedAuthor}</p>
               </div>
 
               <div className="blog-detail-v2__card">
-                <p className="blog-detail-v2__card-label">Publication</p>
-                <p className="blog-detail-v2__card-value">{formatDate(post.publishedAt)}</p>
+                <p className="blog-detail-v2__card-label">{t('blogDetail.sidebar.publication')}</p>
+                <p className="blog-detail-v2__card-value">
+                  {formatDate(post.publishedAt, i18n.language)}
+                </p>
               </div>
 
               <div className="blog-detail-v2__card">
-                <p className="blog-detail-v2__card-label">Lecture</p>
-                <p className="blog-detail-v2__card-value">{readingTime} min</p>
+                <p className="blog-detail-v2__card-label">{t('blogDetail.sidebar.reading')}</p>
+                <p className="blog-detail-v2__card-value">
+                  {t('blogDetail.readingTimeShort', { count: readingTime })}
+                </p>
               </div>
 
               <Link to="/blog" className="blog-detail-v2__back">
-                Retour au blog
+                {t('blogDetail.back')}
               </Link>
             </aside>
 
             <article className="blog-detail-v2__article">
               <div
                 className="blog-detail-v2__content"
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{ __html: translatedContent }}
               />
             </article>
           </div>

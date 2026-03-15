@@ -3,66 +3,67 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import './Multimedia.css';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featuredItem = {
-  id: '00',
-  title: 'Présentation générale SOGEDAG',
-  subtitle: 'Document vedette',
-  text:
-    'Un support central pour découvrir l’univers SOGEDAG, son positionnement, ses solutions et son approche de l’accompagnement terrain.',
-  image: 'hero.jpg',
-  pdf: '/pdfs/presentation-sogedag.pdf',
-};
-
-const mediaItems = [
-  {
-    id: '01',
-    title: 'Catalogue Biostimulants',
-    subtitle: 'Catalogue PDF',
-    image: 'image_cata1.jpg',
-    pdf: '/pdfs/biostimulants.pdf',
-  },
-  {
-    id: '02',
-    title: 'Guide Engrais spéciaux',
-    subtitle: 'Documentation',
-    image: 'image_cata2.jpg',
-    pdf: '/pdfs/engrais-speciaux.pdf',
-  },
-  {
-    id: '03',
-    title: 'Présentation Mineral-Tech',
-    subtitle: 'Présentation PDF',
-    image: 'image_cata3.jpg',
-    pdf: '/pdfs/mineral-tech.pdf',
-  },
-  {
-    id: '04',
-    title: 'Fiche Engrais organiques',
-    subtitle: 'Fiche technique',
-    image: 'image_cata4.jpg',
-    pdf: '/pdfs/engrais-organiques.pdf',
-  },
-  {
-    id: '05',
-    title: 'Brochure NPK',
-    subtitle: 'Brochure PDF',
-    image: 'image_cata5.jpg',
-    pdf: '/pdfs/npk.pdf',
-  },
-  {
-    id: '06',
-    title: 'Catalogue Engrais minéraux',
-    subtitle: 'Catalogue PDF',
-    image: 'image_cata6.jpg',
-    pdf: '/pdfs/engrais-mineraux.pdf',
-  },
-];
-
 export default function Multimedia() {
   const pageRef = useRef(null);
+  const { t } = useTranslation();
+
+  const featuredItem = {
+    id: '00',
+    title: t('multimedia.featuredItem.title'),
+    subtitle: t('multimedia.featuredItem.subtitle'),
+    text: t('multimedia.featuredItem.text'),
+    image: 'hero.jpg',
+    pdf: '/pdfs/presentation-sogedag.pdf',
+  };
+
+  const mediaItems = [
+    {
+      id: '01',
+      title: t('multimedia.items.one.title'),
+      subtitle: t('multimedia.items.one.subtitle'),
+      image: 'image_cata1.jpg',
+      pdf: '/pdfs/biostimulants.pdf',
+    },
+    {
+      id: '02',
+      title: t('multimedia.items.two.title'),
+      subtitle: t('multimedia.items.two.subtitle'),
+      image: 'image_cata2.jpg',
+      pdf: '/pdfs/engrais-speciaux.pdf',
+    },
+    {
+      id: '03',
+      title: t('multimedia.items.three.title'),
+      subtitle: t('multimedia.items.three.subtitle'),
+      image: 'image_cata3.jpg',
+      pdf: '/pdfs/mineral-tech.pdf',
+    },
+    {
+      id: '04',
+      title: t('multimedia.items.four.title'),
+      subtitle: t('multimedia.items.four.subtitle'),
+      image: 'image_cata4.jpg',
+      pdf: '/pdfs/engrais-organiques.pdf',
+    },
+    {
+      id: '05',
+      title: t('multimedia.items.five.title'),
+      subtitle: t('multimedia.items.five.subtitle'),
+      image: 'image_cata5.jpg',
+      pdf: '/pdfs/npk.pdf',
+    },
+    {
+      id: '06',
+      title: t('multimedia.items.six.title'),
+      subtitle: t('multimedia.items.six.subtitle'),
+      image: 'image_cata6.jpg',
+      pdf: '/pdfs/engrais-mineraux.pdf',
+    },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -416,22 +417,19 @@ export default function Multimedia() {
         </div>
 
         <div className="media-plus-hero__inner">
-          <p className="media-plus-hero__eyebrow">Multimédia</p>
+          <p className="media-plus-hero__eyebrow">{t('multimedia.hero.eyebrow')}</p>
           <h1 className="media-plus-hero__title">
-            Une bibliothèque premium
-            <span> de supports PDF et documents visuels</span>
+            {t('multimedia.hero.title')}
+            <span> {t('multimedia.hero.titleAccent')}</span>
           </h1>
-          <p className="media-plus-hero__text">
-            Retrouvez une sélection de catalogues, brochures, fiches et documents
-            de présentation dans une expérience plus immersive, plus élégante et plus lisible.
-          </p>
+          <p className="media-plus-hero__text">{t('multimedia.hero.text')}</p>
 
           <div className="media-plus-hero__actions">
             <a href="#media-library" className="media-plus-btn media-plus-btn--primary">
-              Explorer la bibliothèque
+              {t('multimedia.hero.explore')}
             </a>
             <a href="/contact" className="media-plus-btn media-plus-btn--secondary">
-              Nous contacter
+              {t('multimedia.hero.contact')}
             </a>
           </div>
         </div>
@@ -440,15 +438,12 @@ export default function Multimedia() {
       <section className="media-plus-featured">
         <div className="media-plus-featured__inner">
           <div className="media-plus-featured__copy">
-            <p className="media-plus-featured__eyebrow">Document vedette</p>
+            <p className="media-plus-featured__eyebrow">{t('multimedia.featured.eyebrow')}</p>
             <h2 className="media-plus-featured__title">
-              Une porte d’entrée
-              <span> vers l’univers SOGEDAG</span>
+              {t('multimedia.featured.title')}
+              <span> {t('multimedia.featured.titleAccent')}</span>
             </h2>
-            <p className="media-plus-featured__text">
-              Commencez par un support central qui présente l’entreprise, ses solutions
-              et sa vision de l’accompagnement agricole.
-            </p>
+            <p className="media-plus-featured__text">{t('multimedia.featured.text')}</p>
           </div>
 
           <div className="media-plus-featured__card">
@@ -459,7 +454,7 @@ export default function Multimedia() {
                 className="media-plus-featured__image"
               />
               <div className="media-plus-featured__overlay"></div>
-              <div className="media-plus-featured__ghost">FEATURED</div>
+              <div className="media-plus-featured__ghost">{t('multimedia.featured.ghost')}</div>
             </div>
 
             <div className="media-plus-featured__content">
@@ -478,7 +473,7 @@ export default function Multimedia() {
                 rel="noreferrer"
                 className="media-plus-btn media-plus-btn--primary"
               >
-                Ouvrir le PDF
+                {t('multimedia.featured.openPdf')}
               </a>
             </div>
           </div>
@@ -487,14 +482,12 @@ export default function Multimedia() {
 
       <section className="media-plus-library" id="media-library">
         <div className="media-plus-library__head">
-          <p className="media-plus-library__eyebrow">Bibliothèque documentaire</p>
+          <p className="media-plus-library__eyebrow">{t('multimedia.library.eyebrow')}</p>
           <h2 className="media-plus-library__title">
-            Une sélection de
-            <span> supports visuels et techniques</span>
+            {t('multimedia.library.title')}
+            <span> {t('multimedia.library.titleAccent')}</span>
           </h2>
-          <p className="media-plus-library__subtitle">
-            Chaque document associe une image, un titre fort et un accès direct au PDF.
-          </p>
+          <p className="media-plus-library__subtitle">{t('multimedia.library.subtitle')}</p>
         </div>
 
         <div className="media-plus-gallery">
@@ -507,7 +500,7 @@ export default function Multimedia() {
                   className="media-plus-item__image"
                 />
                 <div className="media-plus-item__overlay"></div>
-                <div className="media-plus-item__ghost">PDF</div>
+                <div className="media-plus-item__ghost">{t('multimedia.library.ghost')}</div>
               </div>
 
               <div className="media-plus-item__content">
@@ -526,7 +519,7 @@ export default function Multimedia() {
                     rel="noreferrer"
                     className="media-plus-btn media-plus-btn--primary"
                   >
-                    Voir le PDF
+                    {t('multimedia.library.viewPdf')}
                   </a>
                 </div>
               </div>
@@ -538,30 +531,28 @@ export default function Multimedia() {
       <section className="media-plus-stats">
         <div className="media-plus-stats__inner">
           <div className="media-plus-stats__head">
-            <p className="media-plus-stats__eyebrow">Valeur documentaire</p>
+            <p className="media-plus-stats__eyebrow">{t('multimedia.stats.eyebrow')}</p>
             <h2 className="media-plus-stats__title">
-              Une bibliothèque pensée
-              <span> pour être utile et lisible</span>
+              {t('multimedia.stats.title')}
+              <span> {t('multimedia.stats.titleAccent')}</span>
             </h2>
-            <p className="media-plus-stats__subtitle">
-              Une organisation claire pour consulter rapidement les bons supports.
-            </p>
+            <p className="media-plus-stats__subtitle">{t('multimedia.stats.subtitle')}</p>
           </div>
 
           <div className="media-plus-stats__grid">
             <article className="media-plus-stat">
               <strong>06</strong>
-              <span>Documents principaux</span>
+              <span>{t('multimedia.stats.items.documents')}</span>
             </article>
 
             <article className="media-plus-stat">
               <strong>100%</strong>
-              <span>Accès direct aux PDFs</span>
+              <span>{t('multimedia.stats.items.directAccess')}</span>
             </article>
 
             <article className="media-plus-stat">
               <strong>01</strong>
-              <span>Bibliothèque centralisée</span>
+              <span>{t('multimedia.stats.items.centralized')}</span>
             </article>
           </div>
         </div>
@@ -569,22 +560,19 @@ export default function Multimedia() {
 
       <section className="media-plus-cta">
         <div className="media-plus-cta__inner">
-          <p className="media-plus-cta__eyebrow">Aller plus loin</p>
+          <p className="media-plus-cta__eyebrow">{t('multimedia.cta.eyebrow')}</p>
           <h2 className="media-plus-cta__title">
-            Vous recherchez un
-            <span> support spécifique ?</span>
+            {t('multimedia.cta.title')}
+            <span> {t('multimedia.cta.titleAccent')}</span>
           </h2>
-          <p className="media-plus-cta__text">
-            Notre équipe peut vous orienter vers la bonne documentation et vous transmettre
-            le support le plus adapté à votre besoin.
-          </p>
+          <p className="media-plus-cta__text">{t('multimedia.cta.text')}</p>
 
           <div className="media-plus-cta__actions">
             <a href="/contact" className="media-plus-btn media-plus-btn--primary">
-              Nous contacter
+              {t('multimedia.cta.contact')}
             </a>
             <a href="/catalogue" className="media-plus-btn media-plus-btn--secondary">
-              Voir le catalogue
+              {t('multimedia.cta.catalogue')}
             </a>
           </div>
         </div>

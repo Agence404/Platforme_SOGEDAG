@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import Footer from '../components/Footer';
 import './MentionsLegales.css';
+import { useTranslation } from 'react-i18next';
 
 export default function MentionsLegales() {
   const pageRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,19 +53,16 @@ export default function MentionsLegales() {
         <div className="legal-page__bg" aria-hidden="true"></div>
 
         <div className="legal-page__container">
-          <nav className="legal-page__breadcrumbs" aria-label="Fil d’Ariane">
-            <Link to="/">Accueil</Link>
+          <nav className="legal-page__breadcrumbs" aria-label={t('legal.breadcrumb')}>
+            <Link to="/">{t('legal.home')}</Link>
             <span>/</span>
-            <span>Mentions légales</span>
+            <span>{t('legal.page')}</span>
           </nav>
 
           <header className="legal-page__hero">
-            <p className="legal-page__label">Informations légales</p>
-            <h1 className="legal-page__title">Mentions légales</h1>
-            <p className="legal-page__intro">
-              Cette page présente les informations légales relatives à l’édition,
-              l’hébergement et l’utilisation du site.
-            </p>
+            <p className="legal-page__label">{t('legal.hero.label')}</p>
+            <h1 className="legal-page__title">{t('legal.hero.title')}</h1>
+            <p className="legal-page__intro">{t('legal.hero.intro')}</p>
           </header>
         </div>
       </section>
@@ -72,136 +71,87 @@ export default function MentionsLegales() {
         <div className="legal-page__container legal-page__container--narrow">
           <article className="legal-page__content">
             <section className="legal-page__section">
-              <h2>1. Éditeur du site</h2>
+              <h2>{t('legal.sections.one.title')}</h2>
               <p>
-                Le présent site est édité par <strong>SOGEDAG</strong>.
+                {t('legal.sections.one.text1')} <strong>SOGEDAG</strong>.
               </p>
               <p>
-                <strong>Raison sociale :</strong> SOGEDAG
+                <strong>{t('legal.sections.one.companyLabel')}</strong> {t('legal.sections.one.companyValue')}
                 <br />
-                <strong>Forme juridique :</strong> À compléter
+                <strong>{t('legal.sections.one.legalFormLabel')}</strong> {t('legal.sections.one.legalFormValue')}
                 <br />
-                <strong>Capital social :</strong> À compléter
+                <strong>{t('legal.sections.one.capitalLabel')}</strong> {t('legal.sections.one.capitalValue')}
                 <br />
-                <strong>Siège social :</strong> À compléter
+                <strong>{t('legal.sections.one.headOfficeLabel')}</strong> {t('legal.sections.one.headOfficeValue')}
                 <br />
-                <strong>Numéro d’immatriculation :</strong> À compléter
+                <strong>{t('legal.sections.one.registrationLabel')}</strong> {t('legal.sections.one.registrationValue')}
                 <br />
-                <strong>Numéro d’identification fiscale :</strong> À compléter
+                <strong>{t('legal.sections.one.taxIdLabel')}</strong> {t('legal.sections.one.taxIdValue')}
                 <br />
-                <strong>Email :</strong> À compléter
+                <strong>{t('legal.sections.one.emailLabel')}</strong> {t('legal.sections.one.emailValue')}
                 <br />
-                <strong>Téléphone :</strong> À compléter
+                <strong>{t('legal.sections.one.phoneLabel')}</strong> {t('legal.sections.one.phoneValue')}
               </p>
               <p>
-                <strong>Directeur de la publication :</strong> À compléter
+                <strong>{t('legal.sections.one.publicationDirectorLabel')}</strong> {t('legal.sections.one.publicationDirectorValue')}
               </p>
             </section>
 
             <section className="legal-page__section">
-              <h2>2. Hébergement</h2>
+              <h2>{t('legal.sections.two.title')}</h2>
               <p>
-                Le site est hébergé par <strong>À compléter</strong>.
+                {t('legal.sections.two.text1')} <strong>{t('legal.sections.two.hostStrong')}</strong>.
               </p>
               <p>
-                <strong>Nom de l’hébergeur :</strong> À compléter
+                <strong>{t('legal.sections.two.hostNameLabel')}</strong> {t('legal.sections.two.hostNameValue')}
                 <br />
-                <strong>Adresse :</strong> À compléter
+                <strong>{t('legal.sections.two.addressLabel')}</strong> {t('legal.sections.two.addressValue')}
                 <br />
-                <strong>Téléphone :</strong> À compléter
+                <strong>{t('legal.sections.two.phoneLabel')}</strong> {t('legal.sections.two.phoneValue')}
                 <br />
-                <strong>Site web :</strong> À compléter
+                <strong>{t('legal.sections.two.websiteLabel')}</strong> {t('legal.sections.two.websiteValue')}
               </p>
             </section>
 
             <section className="legal-page__section">
-              <h2>3. Propriété intellectuelle</h2>
-              <p>
-                L’ensemble des contenus présents sur ce site, notamment les textes,
-                images, graphismes, logos, icônes, vidéos, documents, éléments
-                téléchargeables et tout autre contenu, est protégé par les dispositions
-                applicables en matière de propriété intellectuelle.
-              </p>
-              <p>
-                Sauf mention contraire, ces éléments sont la propriété exclusive de
-                SOGEDAG. Toute reproduction, représentation, diffusion, adaptation,
-                modification ou exploitation, totale ou partielle, sans autorisation
-                préalable écrite, est interdite.
-              </p>
+              <h2>{t('legal.sections.three.title')}</h2>
+              <p>{t('legal.sections.three.text1')}</p>
+              <p>{t('legal.sections.three.text2')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>4. Responsabilité</h2>
-              <p>
-                SOGEDAG s’efforce d’assurer l’exactitude et la mise à jour des
-                informations diffusées sur le site. Toutefois, l’éditeur ne peut
-                garantir l’exhaustivité, l’exactitude ou l’absence d’erreurs de
-                l’ensemble des contenus.
-              </p>
-              <p>
-                L’utilisateur reconnaît utiliser les informations disponibles sur le
-                site sous sa responsabilité exclusive. SOGEDAG ne pourra être tenue
-                responsable de tout dommage direct ou indirect résultant de l’accès au
-                site ou de son utilisation.
-              </p>
+              <h2>{t('legal.sections.four.title')}</h2>
+              <p>{t('legal.sections.four.text1')}</p>
+              <p>{t('legal.sections.four.text2')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>5. Liens hypertextes</h2>
-              <p>
-                Le site peut contenir des liens vers des sites tiers. Ces liens sont
-                fournis à titre informatif. SOGEDAG n’exerce aucun contrôle sur le
-                contenu de ces sites et décline toute responsabilité quant à leur
-                contenu, fonctionnement ou politique de confidentialité.
-              </p>
+              <h2>{t('legal.sections.five.title')}</h2>
+              <p>{t('legal.sections.five.text')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>6. Données personnelles</h2>
-              <p>
-                Les données personnelles éventuellement collectées via le site sont
-                traitées conformément à la politique de confidentialité applicable.
-              </p>
-              <p>
-                L’utilisateur peut exercer ses droits d’accès, de rectification,
-                d’opposition ou de suppression conformément à la réglementation
-                applicable, en contactant l’éditeur à l’adresse prévue à cet effet.
-              </p>
+              <h2>{t('legal.sections.six.title')}</h2>
+              <p>{t('legal.sections.six.text1')}</p>
+              <p>{t('legal.sections.six.text2')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>7. Cookies</h2>
-              <p>
-                Le site peut utiliser des cookies ou technologies similaires afin
-                d’améliorer l’expérience utilisateur, mesurer l’audience ou assurer
-                certaines fonctionnalités.
-              </p>
-              <p>
-                L’utilisateur peut configurer son navigateur pour refuser tout ou
-                partie des cookies, sous réserve des limitations que cela peut entraîner
-                sur certaines fonctionnalités du site.
-              </p>
+              <h2>{t('legal.sections.seven.title')}</h2>
+              <p>{t('legal.sections.seven.text1')}</p>
+              <p>{t('legal.sections.seven.text2')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>8. Droit applicable</h2>
-              <p>
-                Les présentes mentions légales sont régies par le droit applicable
-                dans le pays d’établissement de l’éditeur, sous réserve de toute règle
-                impérative applicable.
-              </p>
-              <p>
-                En cas de litige, et à défaut de résolution amiable, les juridictions
-                compétentes seront celles du ressort du siège social de l’éditeur, sauf
-                disposition légale contraire.
-              </p>
+              <h2>{t('legal.sections.eight.title')}</h2>
+              <p>{t('legal.sections.eight.text1')}</p>
+              <p>{t('legal.sections.eight.text2')}</p>
             </section>
 
             <section className="legal-page__section">
-              <h2>9. Contact</h2>
+              <h2>{t('legal.sections.nine.title')}</h2>
               <p>
-                Pour toute question relative au site ou à son contenu, vous pouvez
-                contacter SOGEDAG via la page <Link to="/contact">Contact</Link>.
+                {t('legal.sections.nine.text1')} <Link to="/contact">{t('legal.contact')}</Link>.
               </p>
             </section>
           </article>

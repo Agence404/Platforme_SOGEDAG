@@ -4,68 +4,64 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import './Catalogue.css';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const catalogueItems = [
-  {
-    id: '01',
-    slug: 'biostimulants',
-    word: 'BIO',
-    title: 'Biostimulants',
-    text:
-      'Des solutions conçues pour stimuler les mécanismes naturels des plantes et améliorer leur vigueur, leur résistance et leur équilibre.',
-    image: 'image_cata1.jpg',
-  },
-  {
-    id: '02',
-    slug: 'engrais-speciaux',
-    word: 'SPÉCIAL',
-    title: 'Engrais spéciaux',
-    text:
-      'Des formulations spécifiques adaptées aux besoins techniques des cultures, à chaque stade de développement et à chaque objectif agronomique.',
-    image: 'image 2.jpg',
-  },
-  {
-    id: '03',
-    slug: 'mineral-tech',
-    word: 'TECH',
-    title: 'Engrais Mineral-Tech',
-    text:
-      'Une technologie avancée au service d’une nutrition plus précise, plus stable et mieux assimilée par la plante.',
-    image: 'image_cata3.jpg',
-  },
-  {
-    id: '04',
-    slug: 'engrais-organiques',
-    word: 'ORGANIQUE',
-    title: 'Engrais organiques',
-    text:
-      'Des solutions orientées vers une fertilisation durable et respectueuse de l’équilibre du sol et de la vie microbienne.',
-    image: 'image_cata4.jpg',
-  },
-  {
-    id: '05',
-    slug: 'npk',
-    word: 'NPK',
-    title: 'Engrais NPK hydrosolubles & en pâte',
-    text:
-      'Des produits performants pour une nutrition rapide, maîtrisée et adaptée aux exigences des systèmes modernes de fertilisation.',
-    image: 'image_cata5.jpg',
-  },
-  {
-    id: '06',
-    slug: 'engrais-mineraux',
-    word: 'MINÉRAL',
-    title: 'Engrais minéraux',
-    text:
-      'Une gamme essentielle pour soutenir efficacement la croissance, la nutrition et le rendement des cultures.',
-    image: 'image_cata6.jpg',
-  },
-];
-
 export default function Catalogue() {
   const pageRef = useRef(null);
+  const { t } = useTranslation();
+
+  const catalogueItems = [
+    {
+      id: '01',
+      slug: 'biostimulants',
+      word: t('catalogue.items.bio.word'),
+      title: t('catalogue.items.bio.title'),
+      text: t('catalogue.items.bio.text'),
+      image: 'image_cata1.jpg',
+    },
+    {
+      id: '02',
+      slug: 'engrais-speciaux',
+      word: t('catalogue.items.special.word'),
+      title: t('catalogue.items.special.title'),
+      text: t('catalogue.items.special.text'),
+      image: 'image 2.jpg',
+    },
+    {
+      id: '03',
+      slug: 'mineral-tech',
+      word: t('catalogue.items.tech.word'),
+      title: t('catalogue.items.tech.title'),
+      text: t('catalogue.items.tech.text'),
+      image: 'image_cata3.jpg',
+    },
+    {
+      id: '04',
+      slug: 'engrais-organiques',
+      word: t('catalogue.items.organic.word'),
+      title: t('catalogue.items.organic.title'),
+      text: t('catalogue.items.organic.text'),
+      image: 'image_cata4.jpg',
+    },
+    {
+      id: '05',
+      slug: 'npk',
+      word: t('catalogue.items.npk.word'),
+      title: t('catalogue.items.npk.title'),
+      text: t('catalogue.items.npk.text'),
+      image: 'image_cata5.jpg',
+    },
+    {
+      id: '06',
+      slug: 'engrais-mineraux',
+      word: t('catalogue.items.mineral.word'),
+      title: t('catalogue.items.mineral.title'),
+      text: t('catalogue.items.mineral.text'),
+      image: 'image_cata6.jpg',
+    },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -191,30 +187,23 @@ export default function Catalogue() {
         </div>
 
         <div className="catalogue-page-hero__inner">
-          <p className="catalogue-page-hero__eyebrow">Catalogue SOGEDAG</p>
+          <p className="catalogue-page-hero__eyebrow">{t('catalogue.hero.eyebrow')}</p>
           <h1 className="catalogue-page-hero__title">
-            Une gamme complète de
-            <span> solutions agricoles</span>
+            {t('catalogue.hero.title')}
+            <span> {t('catalogue.hero.titleAccent')}</span>
           </h1>
-          <p className="catalogue-page-hero__text">
-            Découvrez nos six grandes catégories de produits, pensées pour répondre
-            avec précision aux besoins de nutrition, de stimulation et de performance
-            des cultures.
-          </p>
+          <p className="catalogue-page-hero__text">{t('catalogue.hero.text')}</p>
         </div>
       </section>
 
       <section className="catalogue-page-list">
         <div className="catalogue-page-section-head">
-          <p className="catalogue-page-list__eyebrow">Nos catégories</p>
+          <p className="catalogue-page-list__eyebrow">{t('catalogue.list.eyebrow')}</p>
           <h2 className="catalogue-page-list__title">
-            Explorez les
-            <span> 6 catalogues</span>
+            {t('catalogue.list.title')}
+            <span> {t('catalogue.list.titleAccent')}</span>
           </h2>
-          <p className="catalogue-page-list__subtitle">
-            Chaque catégorie répond à une logique agronomique précise, adaptée aux
-            objectifs techniques et aux réalités du terrain.
-          </p>
+          <p className="catalogue-page-list__subtitle">{t('catalogue.list.subtitle')}</p>
         </div>
 
         <div className="catalogue-page-grid">
@@ -223,7 +212,7 @@ export default function Catalogue() {
               key={item.id}
               to={`/catalogue/${item.slug}`}
               className="catalogue-page-card"
-              aria-label={`Voir la catégorie ${item.title}`}
+              aria-label={t('catalogue.cardAria', { title: item.title })}
             >
               <div className="catalogue-page-card__word">{item.word}</div>
 
@@ -240,7 +229,7 @@ export default function Catalogue() {
                 <div className="catalogue-page-card__meta">
                   <span className="catalogue-page-card__index">{item.id}</span>
                   <span className="catalogue-page-card__line"></span>
-                  <span className="catalogue-page-card__label">Catalogue</span>
+                  <span className="catalogue-page-card__label">{t('catalogue.cardLabel')}</span>
                 </div>
 
                 <h3>{item.title}</h3>

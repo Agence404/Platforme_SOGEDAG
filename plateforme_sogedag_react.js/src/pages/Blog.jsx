@@ -4,92 +4,87 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from '../components/Footer';
 import './Blog.css';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featuredPost = {
-  id: '00',
-  slug: 'comprendre-le-terrain',
-  title: 'Comprendre le terrain avant toute décision technique',
-  content:
-    'L’observation agronomique reste le point de départ d’une stratégie culturale cohérente. Avant toute intervention, il est essentiel de lire le contexte, les besoins de la culture et les contraintes du terrain afin de construire une réponse réellement adaptée.',
-  author: 'Équipe SOGEDAG',
-  date: '12 Mars 2026',
-  image: 'image_cata1.jpg',
-  product: 'Biostimulants',
-};
-
-const posts = [
-  {
-    id: '01',
-    slug: 'nutrition-equilibre-cultures',
-    title: 'Nutrition, équilibre et régularité des cultures',
-    content:
-      'Une approche plus précise de la nutrition végétale permet de renforcer la vigueur, d’accompagner la régularité de développement et de mieux soutenir le potentiel de rendement.',
-    author: 'Service Agronomique',
-    date: '08 Mars 2026',
-    image: 'image_cata2.jpg',
-    product: 'Engrais spéciaux',
-  },
-  {
-    id: '02',
-    slug: 'stimuler-sans-desequilibrer',
-    title: 'Stimuler sans déséquilibrer la plante',
-    content:
-      'La biostimulation doit s’inscrire dans une logique de soutien et d’équilibre physiologique. L’objectif est d’accompagner la plante sans perturber sa cohérence de développement.',
-    author: 'Équipe Technique',
-    date: '03 Mars 2026',
-    image: 'image_cata3.jpg',
-    product: 'Biostimulants',
-  },
-  {
-    id: '03',
-    slug: 'innovation-realite-champ',
-    title: 'Quand l’innovation rencontre la réalité du champ',
-    content:
-      'La valeur d’une solution se mesure dans sa capacité à répondre aux contraintes concrètes du terrain. C’est dans cette rencontre entre innovation et observation que naît la vraie pertinence.',
-    author: 'Pôle Innovation',
-    date: '25 Février 2026',
-    image: 'image_cata4.jpg',
-    product: 'Mineral-Tech',
-  },
-  {
-    id: '04',
-    slug: 'accompagnement-levier-decision',
-    title: 'L’accompagnement technique comme levier de décision',
-    content:
-      'Le conseil terrain permet d’ajuster les pratiques, de sécuriser les choix et de maintenir une cohérence entre objectifs, solutions et contexte agronomique.',
-    author: 'Support Terrain',
-    date: '18 Février 2026',
-    image: 'image_cata5.jpg',
-    product: 'Accompagnement',
-  },
-  {
-    id: '05',
-    slug: 'performance-temps-long',
-    title: 'Construire la performance dans le temps long',
-    content:
-      'Une agriculture performante et durable se construit à partir d’une lecture rigoureuse des besoins, d’une stratégie claire et de solutions capables d’accompagner la culture dans la durée.',
-    author: 'Direction Technique',
-    date: '09 Février 2026',
-    image: 'image_cata6.jpg',
-    product: 'Engrais minéraux',
-  },
-  {
-    id: '06',
-    slug: 'role-formulation-coherence-agronomique',
-    title: 'Le rôle de la formulation dans la cohérence agronomique',
-    content:
-      'Une formulation pertinente ne se limite pas à une promesse produit. Elle doit s’inscrire dans une logique complète de nutrition, d’équilibre et de réponse adaptée à la culture.',
-    author: 'Recherche & Développement',
-    date: '01 Février 2026',
-    image: 'image 2.jpg',
-    product: 'Engrais organiques',
-  },
-];
-
 export default function Blog() {
   const pageRef = useRef(null);
+  const { t } = useTranslation();
+
+  const featuredPost = {
+    id: '00',
+    slug: 'comprendre-le-terrain',
+    title: t('blog.featuredPost.title'),
+    content: t('blog.featuredPost.content'),
+    author: t('blog.featuredPost.author'),
+    date: t('blog.featuredPost.date'),
+    image: 'image_cata1.jpg',
+    product: t('blog.featuredPost.product'),
+  };
+
+  const posts = [
+    {
+      id: '01',
+      slug: 'nutrition-equilibre-cultures',
+      title: t('blog.posts.one.title'),
+      content: t('blog.posts.one.content'),
+      author: t('blog.posts.one.author'),
+      date: t('blog.posts.one.date'),
+      image: 'image_cata2.jpg',
+      product: t('blog.posts.one.product'),
+    },
+    {
+      id: '02',
+      slug: 'stimuler-sans-desequilibrer',
+      title: t('blog.posts.two.title'),
+      content: t('blog.posts.two.content'),
+      author: t('blog.posts.two.author'),
+      date: t('blog.posts.two.date'),
+      image: 'image_cata3.jpg',
+      product: t('blog.posts.two.product'),
+    },
+    {
+      id: '03',
+      slug: 'innovation-realite-champ',
+      title: t('blog.posts.three.title'),
+      content: t('blog.posts.three.content'),
+      author: t('blog.posts.three.author'),
+      date: t('blog.posts.three.date'),
+      image: 'image_cata4.jpg',
+      product: t('blog.posts.three.product'),
+    },
+    {
+      id: '04',
+      slug: 'accompagnement-levier-decision',
+      title: t('blog.posts.four.title'),
+      content: t('blog.posts.four.content'),
+      author: t('blog.posts.four.author'),
+      date: t('blog.posts.four.date'),
+      image: 'image_cata5.jpg',
+      product: t('blog.posts.four.product'),
+    },
+    {
+      id: '05',
+      slug: 'performance-temps-long',
+      title: t('blog.posts.five.title'),
+      content: t('blog.posts.five.content'),
+      author: t('blog.posts.five.author'),
+      date: t('blog.posts.five.date'),
+      image: 'image_cata6.jpg',
+      product: t('blog.posts.five.product'),
+    },
+    {
+      id: '06',
+      slug: 'role-formulation-coherence-agronomique',
+      title: t('blog.posts.six.title'),
+      content: t('blog.posts.six.content'),
+      author: t('blog.posts.six.author'),
+      date: t('blog.posts.six.date'),
+      image: 'image 2.jpg',
+      product: t('blog.posts.six.product'),
+    },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -308,34 +303,26 @@ export default function Blog() {
         </div>
 
         <div className="blog-plus-hero__inner">
-          <p className="blog-plus-hero__eyebrow">Blog SOGEDAG</p>
+          <p className="blog-plus-hero__eyebrow">{t('blog.hero.eyebrow')}</p>
           <h1 className="blog-plus-hero__title">
-            Regards, analyses et contenus
-            <span> autour du terrain agricole</span>
+            {t('blog.hero.title')}
+            <span> {t('blog.hero.titleAccent')}</span>
           </h1>
-          <p className="blog-plus-hero__text">
-            Une bibliothèque éditoriale pour approfondir les pratiques,
-            les produits, la lecture agronomique et les logiques de performance durable.
-          </p>
+          <p className="blog-plus-hero__text">{t('blog.hero.text')}</p>
         </div>
       </section>
 
       <section className="blog-plus-featured">
         <div className="blog-plus-featured__head">
-          <p className="blog-plus-featured__eyebrow">Article vedette</p>
+          <p className="blog-plus-featured__eyebrow">{t('blog.featured.eyebrow')}</p>
           <h2 className="blog-plus-featured__title">
-            Un contenu central
-            <span> pour mieux comprendre notre approche</span>
+            {t('blog.featured.title')}
+            <span> {t('blog.featured.titleAccent')}</span>
           </h2>
-          <p className="blog-plus-featured__subtitle">
-            Un article principal mis en avant pour ouvrir la lecture éditoriale du site.
-          </p>
+          <p className="blog-plus-featured__subtitle">{t('blog.featured.subtitle')}</p>
         </div>
 
-        <Link
-          to={`/blog/${featuredPost.slug}`}
-          className="blog-plus-featured__card"
-        >
+        <Link to={`/blog/${featuredPost.slug}`} className="blog-plus-featured__card">
           <div className="blog-plus-featured__media">
             <img
               src={featuredPost.image}
@@ -343,7 +330,7 @@ export default function Blog() {
               className="blog-plus-featured__image"
             />
             <div className="blog-plus-featured__overlay"></div>
-            <div className="blog-plus-featured__ghost">BLOG</div>
+            <div className="blog-plus-featured__ghost">{t('blog.featured.ghost')}</div>
           </div>
 
           <div className="blog-plus-featured__content">
@@ -364,11 +351,7 @@ export default function Blog() {
       <section className="blog-plus-posts">
         <div className="blog-plus-grid">
           {posts.map((post) => (
-            <Link
-              to={`/blog/${post.slug}`}
-              key={post.id}
-              className="blog-plus-post"
-            >
+            <Link to={`/blog/${post.slug}`} key={post.id} className="blog-plus-post">
               <div className="blog-plus-post__media">
                 <img
                   src={post.image}
@@ -400,36 +383,28 @@ export default function Blog() {
 
       <section className="blog-plus-editorial">
         <div className="blog-plus-editorial__head">
-          <p className="blog-plus-editorial__eyebrow">Lecture éditoriale</p>
+          <p className="blog-plus-editorial__eyebrow">{t('blog.editorial.eyebrow')}</p>
           <h2 className="blog-plus-editorial__title">
-            Des contenus construits
-            <span> autour de la cohérence terrain</span>
+            {t('blog.editorial.title')}
+            <span> {t('blog.editorial.titleAccent')}</span>
           </h2>
-          <p className="blog-plus-editorial__subtitle">
-            Chaque article relie observation, produit, accompagnement et performance.
-          </p>
+          <p className="blog-plus-editorial__subtitle">{t('blog.editorial.subtitle')}</p>
         </div>
 
         <div className="blog-plus-editorial__grid">
           <article className="blog-plus-editorial__panel">
-            <strong>Produits</strong>
-            <p>
-              Chaque contenu peut être associé à une famille de solutions ou à un usage précis.
-            </p>
+            <strong>{t('blog.editorial.panels.products.title')}</strong>
+            <p>{t('blog.editorial.panels.products.text')}</p>
           </article>
 
           <article className="blog-plus-editorial__panel">
-            <strong>Terrain</strong>
-            <p>
-              Les articles s’appuient sur les réalités culturales et la logique d’observation.
-            </p>
+            <strong>{t('blog.editorial.panels.field.title')}</strong>
+            <p>{t('blog.editorial.panels.field.text')}</p>
           </article>
 
           <article className="blog-plus-editorial__panel">
-            <strong>Expertise</strong>
-            <p>
-              Auteurs, dates, contexte et contenu structurent une lecture claire et professionnelle.
-            </p>
+            <strong>{t('blog.editorial.panels.expertise.title')}</strong>
+            <p>{t('blog.editorial.panels.expertise.text')}</p>
           </article>
         </div>
       </section>
