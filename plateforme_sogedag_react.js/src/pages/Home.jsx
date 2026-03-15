@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CardCarousel from '../components/CardCarousel';
 import './Home.css';
 import Footer from '../components/Footer';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
@@ -2948,7 +2949,7 @@ reviewsMM.add('(max-width: 968px)', () => {
     </div>
   </div>
 </section>
-<Footer/>
+<Footer />
     </main>
   );
 }

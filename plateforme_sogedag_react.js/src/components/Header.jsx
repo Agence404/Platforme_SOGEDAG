@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openMenu = () => setIsOpen(true);
   const closeMenu = () => setIsOpen(false);
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
@@ -30,7 +30,6 @@ export default function Header() {
         <div className="header-side header-side--left">
           <button
             className={`menu-toggle ${isOpen ? 'is-open' : ''}`}
-            id="menuToggle"
             aria-label="Ouvrir le menu"
             aria-expanded={isOpen ? 'true' : 'false'}
             aria-controls="menuPanel"
@@ -45,19 +44,32 @@ export default function Header() {
         </div>
 
         <div className="header-center">
-          <a href="#" className="logo" aria-label="Accueil SOGEDAG">
-            <img src="logo-Sogedag.jpg" alt="SOGEDAG" className="logo__mark" />
-          </a>
+          <Link to="/" className="logo" aria-label="Accueil SOGEDAG" onClick={closeMenu}>
+            <img src="/logo-Sogedag.jpg" alt="SOGEDAG" className="logo__mark" />
+          </Link>
         </div>
 
         <div className="header-side header-side--right">
-          <a href="#" className="quote-btn" aria-label="Demandez un devis">
-            <span className="quote-btn__icon-wrap" aria-hidden="true">
-              <img src="flower.png" alt="" className="quote-btn__icon" />
-            </span>
-            <span className="quote-btn__text">Demandez un devis</span>
-          </a>
-        </div>
+  <a
+    href="https://www.linkedin.com/"
+    target="_blank"
+    rel="noreferrer"
+    className="quote-btn quote-btn--linkedin"
+    aria-label="Voir notre page LinkedIn"
+  >
+    <span className="quote-btn__icon-wrap quote-btn__icon-wrap--linkedin" aria-hidden="true">
+      <img src="/linkedin.png" alt="" className="quote-btn__icon quote-btn__icon--linkedin" />
+    </span>
+    <span className="quote-btn__text">LinkedIn</span>
+  </a>
+
+  <a href="#contact" className="quote-btn" aria-label="Demandez un devis">
+    <span className="quote-btn__icon-wrap" aria-hidden="true">
+      <img src="/flower.png" alt="" className="quote-btn__icon" />
+    </span>
+    <span className="quote-btn__text">Demandez un devis</span>
+  </a>
+</div>
       </header>
 
       <div
@@ -75,7 +87,6 @@ export default function Header() {
           <span className="menu-panel__eyebrow">Navigation</span>
           <button
             className="menu-close"
-            id="menuClose"
             aria-label="Fermer le menu"
             onClick={closeMenu}
           >
@@ -98,47 +109,57 @@ export default function Header() {
 
           <ul className="menu-nav">
             <li>
-              <a href="#">
+              <Link to="/catalogue" onClick={closeMenu}>
                 <span className="menu-nav__label">Produits</span>
                 <span className="menu-nav__arrow">→</span>
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#">
-                <span className="menu-nav__label">Apropos</span>
+              <Link to="/apropos" onClick={closeMenu}>
+                <span className="menu-nav__label">À propos</span>
                 <span className="menu-nav__arrow">→</span>
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#">
-                <span className="menu-nav__label">Recherche</span>
-                <span className="menu-nav__arrow">→</span>
-              </a>
+              <Link to="/recherche" onClick={closeMenu}>
+              <span className="menu-nav__label">Recherche</span>
+              <span className="menu-nav__arrow">→</span>
+              </Link>
             </li>
+
             <li>
-              <a href="#">
+              <Link to="/blog" onClick={closeMenu}>
                 <span className="menu-nav__label">Blog</span>
                 <span className="menu-nav__arrow">→</span>
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#">
+              <Link to="/multimedia" onClick={closeMenu}>
                 <span className="menu-nav__label">Multimédia</span>
                 <span className="menu-nav__arrow">→</span>
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#">
+              <Link to="/contact" onClick={closeMenu}>
                 <span className="menu-nav__label">Contactez-nous</span>
                 <span className="menu-nav__arrow">→</span>
-              </a>
+              </Link>
             </li>
           </ul>
 
           <div className="menu-panel__bottom">
-            <a href="#" className="drawer-quote-btn" aria-label="Demandez un devis">
+            <a
+              href="#contact"
+              className="drawer-quote-btn"
+              aria-label="Demandez un devis"
+              onClick={closeMenu}
+            >
               <span className="drawer-quote-btn__icon-wrap" aria-hidden="true">
-                <img src="flower.png" alt="" className="drawer-quote-btn__icon" />
+                <img src="/flower.png" alt="" className="drawer-quote-btn__icon" />
               </span>
               <span className="drawer-quote-btn__text">Demandez un devis</span>
             </a>

@@ -1016,3 +1016,83 @@ label {
 .otp-input:focus {
   box-shadow: 0 0 0 2px rgba(246, 139, 60, 0.22);
 }
+.alert {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.alert-error {
+  background: rgba(180, 35, 24, 0.08);
+  color: var(--danger);
+  border: 1px solid rgba(180, 35, 24, 0.16);
+}
+
+.alert-success {
+  background: rgba(47, 132, 72, 0.1);
+  color: var(--green-800);
+  border: 1px solid rgba(47, 132, 72, 0.18);
+}
+
+.note-danger {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.status-published {
+  background: rgba(47, 132, 72, 0.12);
+  color: var(--green-800);
+}
+
+.status-draft {
+  background: rgba(141, 106, 45, 0.12);
+  color: var(--gold);
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-sm {
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--green-700), var(--green-800));
+  color: #fff;
+}
+
+.btn-warning {
+  background: rgba(141, 106, 45, 0.12);
+  color: var(--gold);
+  border: 1px solid rgba(141, 106, 45, 0.18);
+}
+
+.btn-danger {
+  background: rgba(180, 35, 24, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(180, 35, 24, 0.18);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 10px;
+  font-style: italic;
+}

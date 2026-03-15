@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -239,9 +240,8 @@ export default function Footer() {
           </div>
 
           <div className="sogedag-footer__bottom-right">
-            <a href="/">Mentions légales</a>
-            <a href="/">Confidentialité</a>
-            <a href="/">Cookies</a>
+            <Link to="/mentions-legales">Mentions légales</Link>
+            <Link to="/confidentialite">Confidentialité</Link>
           </div>
         </div>
       </div>

@@ -706,3 +706,27 @@ body {
     font-size: 28px;
   }
 }
+.quote-btn--linkedin {
+  background: linear-gradient(180deg, #1f6fb2 0%, #165a91 100%);
+  box-shadow:
+    0 14px 28px rgba(22, 90, 145, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.quote-btn--linkedin:hover {
+  background: linear-gradient(180deg, #247bc4 0%, #124c7a 100%);
+  box-shadow:
+    0 20px 34px rgba(22, 90, 145, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+}
+
+.quote-btn__icon-wrap--linkedin {
+  background: linear-gradient(180deg, #d7ecff 0%, #b8dbff 100%);
+}
+
+.quote-btn__icon--linkedin {
+  width: 26px;
+  height: 26px;
+}
